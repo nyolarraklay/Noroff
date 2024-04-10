@@ -1,10 +1,11 @@
+import Layout from "./Components/Layouts"
 
 function App() {
 
 
   return (
-    <div>
-Project Exam
+    <div className="bg-blue-500">   
+      <Layout />
     </div>
   )
 }
