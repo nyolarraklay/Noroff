@@ -1,8 +1,10 @@
-import React from 'react'
+import Search from '../SearchComponent'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Search />
+    </div>
   )
 }
 

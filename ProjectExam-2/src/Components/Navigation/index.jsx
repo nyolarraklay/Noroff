@@ -15,7 +15,7 @@ function Navigation() {
             <button onClick={hideNavHandler} className='text-2xl cursor-pointer'>☰</button>
         </div>
         {hideNav && 
-    <div className='bg-black p-5 fixed w-full h-full'>
+    <div className='bg-black p-5 fixed w-full h-full z-50'>
         <p className='bg-red-200 text-center cursor-pointer text-lg'><Link to='./sign-in'>Sign in</Link> / <Link to='./register'>Create Account</Link></p>
         <ul className='flex flex-col items-start mt-5 gap-5' onClick={hideNavHandler}>
             <li > <Link to='/'>
