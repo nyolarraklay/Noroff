@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import StarRating from "../StarRating";
 
 function Venue({ venue }) {
   const media = venue.media[0];
 
   return (
+    <Link to={`/venue/${venue.id}`}>
     <div className="grid grid-cols-2 items-center  bg-white p-3">
       <div>
         <img src={media.url} alt={media.alt} className="object-cover rounded-md size-32" />
@@ -26,6 +28,7 @@ function Venue({ venue }) {
      
       </div>
     </div>
+    </Link>
   )
 }
 

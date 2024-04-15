@@ -6,6 +6,7 @@ import Contacts from '../Contact'
 import Venues from '../Venues'
 import MyBookings from '../Bookings'
 import RouteNotFound from '../Error'
+import VenueIndividual from '../Venue'
 
 const router = createBrowserRouter([{
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([{
         { path: "/contacts", element: <Contacts /> },
         { path: "/venues", element: <Venues /> },
         { path: "/bookings", element: <MyBookings /> },
+        { path: "/venue/:id", element: <VenueIndividual /> },
         
     ]
 }])

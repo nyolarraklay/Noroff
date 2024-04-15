@@ -8,7 +8,7 @@ function Home() {
     <div>
       <Search />
       <Destinations />
-      <ApiLists />
+     
     </div>
   )
 }
