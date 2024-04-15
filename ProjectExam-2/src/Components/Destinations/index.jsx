@@ -1,3 +1,4 @@
+import ShortListVenue from "../API"
 
 function Destinations() {
   return (
@@ -6,6 +7,7 @@ function Destinations() {
             <h2 className="font-bold">Popular Destination</h2>
             <p>See all</p>
         </div>
+        <ShortListVenue />
     </div>
   )
 }
