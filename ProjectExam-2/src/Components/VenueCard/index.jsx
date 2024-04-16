@@ -3,6 +3,7 @@ import StarRating from "../StarRating";
 
 function Venue({ venue }) {
   const media = venue.media[0];
+  const location = venue.location;
 
   return (
     <Link to={`/venue/${venue.id}`}>
@@ -16,7 +17,7 @@ function Venue({ venue }) {
              <h3>{venue.price}<span className="text-xs">/night</span></h3>
         </div>
         <div>
-          <p>Location</p>
+          <p>{location.city}, {location.country}</p>
           <div className="flex justify-between">
             <StarRating venue={venue} />
             <p>{venue.rating}</p>
