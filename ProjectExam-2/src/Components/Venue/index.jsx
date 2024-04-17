@@ -5,6 +5,7 @@ import StarRating from "../StarRating";
 import { FaWifi, FaParking  } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { MdOutlinePets } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function VenueIndividual() {
   const { fetchVenue, venue } = useStore();
@@ -88,7 +89,7 @@ const locationName = locationNameParts.join(", ");
         <p className="p-3">  {locationName}</p>
         </div>
       </div>
-      <button className="bg-blue-500 text-white rounded-md p-2 my-10">Book Now</button>
+      <button className="bg-blue-500 text-white rounded-md p-2 my-10"><Link to={'/book-now'}> Book Now</Link> </button>
     </div>
   );
 }

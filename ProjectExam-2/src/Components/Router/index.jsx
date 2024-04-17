@@ -8,6 +8,7 @@ import MyBookings from '../Bookings'
 import RouteNotFound from '../Error'
 import VenueIndividual from '../Venue'
 import SearchResults from '../Search'
+import BookNow from '../BookNow';
 
 const router = createBrowserRouter([{
 
@@ -22,6 +23,7 @@ const router = createBrowserRouter([{
         { path: "/bookings", element: <MyBookings /> },
         { path: "/venue/:id", element: <VenueIndividual /> },
         { path: '/search-results', element: <SearchResults /> },
+        { path: "/book-now", element: <BookNow /> },
         
     ]
 }])
