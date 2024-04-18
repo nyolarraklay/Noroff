@@ -1,23 +1,48 @@
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 const schema = yup.object({
-    email: yup.string().email("Must be a valid email address").matches(/.*@noroff\.no$/, 'Email must be from noroff.no domain').required(),
+    email: yup.string().email("Must be a valid email address").matches(/.*@stud.noroff\.no$/, 'Email must be from noroff.no domain').required(),
     password: yup.string().required().min(8, "Password must be at least 8 characters long"),    
-}).required()
+})
 
 
 
 
 function LogIn() {
+    const [logInUser, setLogInUser] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
-    const onSubmit = (data) => {
-        console.log(data)
+
+        async function logIn(data) {
+              try 
+              {
+                const response = await fetch(`https://v2.api.noroff.dev/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                const json = await response.json();
+                const user = json.data;
+               
+                const accessToken = user.accessToken;
+                localStorage.setItem('accessToken', accessToken);
+                  setLogInUser(true);
+              } catch (error) {
+                console.log(error);
+             
+              }
+              }
+
+             const onSubmit = (data) => {
+                
+                logIn(data);
+              
     }
+
+     
+              
+    
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-10">
@@ -35,7 +60,7 @@ function LogIn() {
         
             <div className="col-span-2">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                <input {...register("password")} type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("password")} type="password" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                 <p className="form-errors">{errors.password?.message}</p>
             </div>
         </div>

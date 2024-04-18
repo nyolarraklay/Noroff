@@ -1,23 +1,42 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 const schema = yup.object({
     name: yup.string().required().min(3, "Name must be at least 3 characters long"),
-    email: yup.string().email("Must be a valid email address").matches(/.*@noroff\.no$/, 'Email must be from noroff.no domain').required(),
+    email: yup.string().email("Must be a valid email address").matches(/.*@stud.noroff\.no$/, 'Email must be from noroff.no domain').required(),
     password: yup.string().required().min(8, "Password must be at least 8 characters long"),    
 }).required()
 
 
 
 function SignUp() {
+    const [registerUser, setRegisterUser] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
+
+    async function registerNewUser(data) {
+        try 
+        {
+          const response = await fetch(`https://v2.api.noroff.dev/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+          const json = await response.json();
+          const user = json.data;
+          console.log(user);
+         
+            setRegisterUser(true);
+        } catch (error) {
+          console.log(error);
+       
+        }
+        }
+
     const onSubmit = (data) => {
-        console.log(data)
+        console.log(data);
+        registerNewUser(data)
     }
 
   return (
@@ -40,13 +59,13 @@ function SignUp() {
             {/* Password */}
             <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                <input {...register("password")} type="text" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("password")} type="password" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                 <p className="form-errors">{errors.password?.message}</p>
             </div>
             {/* Bio */}
             <div className="col-span-2">
-                <label htmlFor="tagline" className="block text-sm font-medium text-gray-700">Tagline</label>
-                <input type="text" name="tagline" id="tagline" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700">Tagline</label>
+                <input {...register("bio")} type="text" name="bio" id="bio" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>
             {/* Avatar */}
             <div>
