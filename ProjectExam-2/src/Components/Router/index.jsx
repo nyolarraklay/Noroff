@@ -9,6 +9,10 @@ import RouteNotFound from '../Error'
 import VenueIndividual from '../Venue'
 import SearchResults from '../Search'
 import BookNow from '../BookNow';
+import LogIn from '../LogIn';
+import SignUp from '../Signup';
+import VenueManagerSignUp from '../VenueManagerSignUp';
+import VenueManagerLogIn from '../VenueManagerLogIn';
 
 const router = createBrowserRouter([{
 
@@ -24,7 +28,10 @@ const router = createBrowserRouter([{
         { path: "/venue/:id", element: <VenueIndividual /> },
         { path: '/search-results', element: <SearchResults /> },
         { path: "/book-now", element: <BookNow /> },
-        
+        { path: "/log-in", element: <LogIn /> },
+        { path: "/sign-up", element: <SignUp /> },
+        { path: "/sign-up/venue-manager", element: <VenueManagerSignUp /> },
+        { path: "/log-in/venue-manager", element: <VenueManagerLogIn /> },
     ]
 }])
 
