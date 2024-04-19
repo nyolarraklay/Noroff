@@ -37,6 +37,7 @@ function SignUp() {
     const onSubmit = (data) => {
         console.log(data);
         registerNewUser(data)
+        alert('Account created successfully, please log in to continue.')
     }
 
   return (

@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import  useStore  from '../Store'
 
 const schema = yup.object({
     email: yup.string().email("Must be a valid email address").matches(/.*@stud.noroff\.no$/, 'Email must be from noroff.no domain').required(),
@@ -14,35 +15,29 @@ const schema = yup.object({
 
 function LogIn() {
     const [logInUser, setLogInUser] = useState(false)
+    const { logIn, apiKey } = useStore();
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
+    const navigate = useNavigate();
 
-        async function logIn(data) {
-              try 
-              {
-                const response = await fetch(`https://v2.api.noroff.dev/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                const json = await response.json();
-                const user = json.data;
-               
-                const accessToken = user.accessToken;
-                localStorage.setItem('accessToken', accessToken);
-                  setLogInUser(true);
-              } catch (error) {
-                console.log(error);
-             
-              }
-              }
 
-             const onSubmit = (data) => {
+   
+             const onSubmit = async(data) => {
+                try {
+                 
+                const user = await logIn(data);
+                setLogInUser(true);
+                navigate('/bookings')
+                apiKey(user.accessToken);
+
+                }
                 
-                logIn(data);
-              
-    }
-
-     
-              
-    
+                catch (error) {
+                    console.log("Login failed:", error);
+                }
+                
+              }
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-10">
