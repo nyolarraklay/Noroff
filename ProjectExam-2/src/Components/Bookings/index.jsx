@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   background-image: url(${props => props.url});
+  background-size: cover;
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -52,6 +53,7 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
 console.log(url);
 
   return (
+    <div>
     <div className='relative p-8'>
       <Container url={url}> 
         <div className="ml-20 ">
@@ -59,12 +61,15 @@ console.log(url);
           <p className="text-white text-sm">{user.email}</p>
         </div>
       </Container>
-      <div className='absolute -bottom-0 left-8'>
+      <div className='absolute bottom-0 left-12'>
         <div className='flex-shrink-0 h-20 w-20 rounded-full overflow-hidden' >
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
        
       </div>
+    </div>
+    <h2 className='text-center'>My Bookings</h2>
+
     </div>
 
     
