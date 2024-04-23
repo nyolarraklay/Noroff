@@ -27,7 +27,7 @@ const router = createBrowserRouter([{
         { path: "/bookings", element: <MyBookings /> },
         { path: "/venue/:id", element: <VenueIndividual /> },
         { path: '/search-results', element: <SearchResults /> },
-        { path: "/book-now", element: <BookNow /> },
+        { path: "/book-now/:venueId", element: <BookNow /> },
         { path: "/log-in", element: <LogIn /> },
         { path: "/sign-up", element: <SignUp /> },
         { path: "/sign-up/venue-manager", element: <VenueManagerSignUp /> },

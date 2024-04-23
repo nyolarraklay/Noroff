@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useStore from '../Store'
 import styled from 'styled-components';
+import Venues from '../VenueCard'
 
 const Container = styled.div`
   background-image: url(${props => props.url});
@@ -20,7 +21,7 @@ const [user, setUser] = useState([])
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}`, {
+        const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/?_bookings=true`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -37,6 +38,14 @@ const [user, setUser] = useState([])
     fetchUser();
   }
   , []);
+
+  const venues = user.bookings || []; 
+  const bookedVenues = venues
+    .filter(venue => venue) 
+    .map(venue => venue.venue);
+  
+
+
 const banner = user.banner
 const { url:url, alt:alt } = banner || {};
 const fullBanner = [];
@@ -50,7 +59,8 @@ const fullAvatar = [];
 if (avatarUrl) fullAvatar.push(avatarUrl);
 if (avatarAlt) fullAvatar.push(avatarAlt);
 
-console.log(url);
+
+
 
   return (
     <div>
@@ -69,6 +79,13 @@ console.log(url);
       </div>
     </div>
     <h2 className='text-center'>My Bookings</h2>
+    <div className='p-10 flex flex-col gap-6'>
+      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} />)}
+       
+    </div>
+   
+
+
 
     </div>
 

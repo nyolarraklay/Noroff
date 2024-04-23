@@ -83,7 +83,39 @@ const useStore = create((set) => ({
           } catch (error) {
             console.log(error);
           }
-        }
+        },
+
+        bookNow: async(checkInDate, checkOutDate, guests, venueID) => {
+          try {
+            if (!checkInDate || !checkOutDate || !guests || !venueID) {
+              throw new Error('Missing parameters in booking request');
+            }
+console.log(checkInDate, checkOutDate, guests, venueID);
+            const response = await fetch('https://v2.api.noroff.dev/holidaze/bookings', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+            dateFrom: checkInDate,
+            dateTo: checkOutDate,
+            guests: guests,
+            venueId: venueID
+              }),
+            });
+            if (!response.ok) {
+              throw new Error('Failed to book venue');
+            }
+
+            const json = await response.json();
+            console.log(json);
+          } catch (error) {
+            console.log(error);
+            throw error;
+          }
+        },
 
 }));
 
