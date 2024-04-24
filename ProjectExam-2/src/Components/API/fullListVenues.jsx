@@ -13,7 +13,7 @@ function FullListVenues() {
     }, [fetchVenues]);
 
   return (
-    <div className='p-10 space-y-6'>
+    <div className='p-10 flex flex-col gap-6'>
       {venues.map((venue) => <Venues venue={venue} key={venue.id}  />)}
        
     </div>

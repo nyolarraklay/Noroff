@@ -16,6 +16,8 @@ function MyBookings() {
 const apiKey = localStorage.getItem('apiKey')
 const userName = localStorage.getItem('user')
 const [user, setUser] = useState([])
+const { allBookings, bookings } = useStore();
+const [booked, setBooked] = useState(false);
 
 
   useEffect(() => {
@@ -36,15 +38,30 @@ const [user, setUser] = useState([])
       }
     }
     fetchUser();
+    allBookings(userName);
+    setBooked(true);
   }
   , []);
+
 
   const venues = user.bookings || []; 
   const bookedVenues = venues
     .filter(venue => venue) 
     .map(venue => venue.venue);
-  
 
+
+
+    
+    const currentDate = new Date();
+
+    const futureBookings = venues.filter(venue => {
+      const checkInDate = new Date(venue.dateFrom);
+      return checkInDate >= currentDate;
+    });
+
+    
+
+ 
 
 const banner = user.banner
 const { url:url, alt:alt } = banner || {};
@@ -78,11 +95,18 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
        
       </div>
     </div>
-    <h2 className='text-center'>My Bookings</h2>
+    <div>
+      <h2>Upcomming Bookings</h2>
+
+    </div>
+    <div>
+      <h2 className='text-center'>My Bookings</h2>
     <div className='p-10 flex flex-col gap-6'>
-      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} />)}
+      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} isBooked={booked} />)}
        
     </div>
+    </div>
+    
    
 
 

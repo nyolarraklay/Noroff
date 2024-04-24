@@ -1,5 +1,5 @@
 import React from 'react'
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 import { useState, useEffect} from 'react';
 import useStore from '../Store';
 import { useParams } from "react-router-dom";
@@ -8,9 +8,10 @@ function BookNow() {
     const [checkInDate, setCheckInDate] = useState(null);
     const [checkOutDate, setCheckOutDate] = useState(null);
     const [guests, setGuests] = useState(null);
-    const { fetchVenue, venue, bookNow } = useStore();
+    const { fetchVenue, venue, bookNow, editBooking, deleteBooking } = useStore();
 
-    let { venueId } = useParams();
+
+    let { venueId, isBooked } = useParams();
 
     const handleCheckInDateChange = (date, dateString) => {
         
@@ -27,6 +28,8 @@ function BookNow() {
        
       };
 
+   
+
 
 
   useEffect(() => {
@@ -40,16 +43,37 @@ function BookNow() {
     const { name, price, id, maxGuests } = venue;
 
     const venueID = id;
-   
+
+    const bookers = venue.bookings;
+
+    let booker;
+
+    if (venue && venue.bookings) {
+        booker = venue.bookings.find(booking => booking.customer.name === localStorage.getItem('user'));
+    }
+    
+    const bookerID = booker ? booker.id : null;
+
 
      function onSubmit() {
+
+        if (isBooked) {
+          editBooking(checkInDate, checkOutDate, guests, venueID, bookerID);
+          
+        } else {
         if (!checkInDate || !checkOutDate || !guests) {
             alert('Please fill in all fields.');
             return;
           }
-          console.log(checkInDate, checkOutDate, guests, venueID);
             bookNow(checkInDate, checkOutDate, guests, venueID);
+            
         }
+      }
+
+      function deleteBookings() {
+        deleteBooking(bookerID);
+      }
+
   return (
     <div className="max-w-lg mx-auto mt-8 p-10">
     <h2 className="text-2xl font-bold mb-4">Venue Booking Form</h2>
@@ -66,15 +90,17 @@ function BookNow() {
            
             <div className="col-span-2 my-10">
                 <div className="flex justify-between space-x-4">
-                    <DatePicker onChange={handleCheckInDateChange} placeholder='Check in' format={"ddd-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
-                    <DatePicker onChange={handleCheckOutDateChange} placeholder='Check Out' format={"ddd-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
+                    <DatePicker onChange={handleCheckInDateChange} placeholder='Check in' format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
+                    <DatePicker onChange={handleCheckOutDateChange} placeholder='Check Out' format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
                 </div>
             </div>
         </div>
    
     </form>   
       <div className="flex justify-end">
-            <button  className="bg-black text-white px-4 py-2 rounded-md" onClick={onSubmit}>Book Now</button>
+       
+            <button  className="bg-black text-white px-4 py-2 rounded-md" onClick={onSubmit}>{isBooked ? 'Edit Booking' : 'Book Now'} </button>
+            {isBooked && <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={deleteBookings}>Cancel Booking</button>}
         </div>
 </div>
 

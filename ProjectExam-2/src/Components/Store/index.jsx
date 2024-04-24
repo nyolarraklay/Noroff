@@ -28,7 +28,7 @@ const useStore = create((set) => ({
     fetchVenue: async (id) => {
       try 
       {
-        const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`);
+        const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}/?_bookings=true`);
         const json = await response.json();
         const data = json.data;
         set((state)=>({...state, venue: data}));
@@ -90,7 +90,7 @@ const useStore = create((set) => ({
             if (!checkInDate || !checkOutDate || !guests || !venueID) {
               throw new Error('Missing parameters in booking request');
             }
-console.log(checkInDate, checkOutDate, guests, venueID);
+
             const response = await fetch('https://v2.api.noroff.dev/holidaze/bookings', {
               method: 'POST',
               headers: {
@@ -110,7 +110,79 @@ console.log(checkInDate, checkOutDate, guests, venueID);
             }
 
             const json = await response.json();
+            alert('Booking successful!');
             console.log(json);
+          } catch (error) {
+            console.log(error);
+            throw error;
+          }
+        },
+
+        allBookings: async(userName) => {
+          try {
+            set((state)=>({...state, bookings: []}));
+            const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/bookings`, {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+              },
+            });
+            const json = await response.json();
+            const data = json.data;
+            set((state)=>({...state, bookings: data}));
+          } catch (error) {
+            console.log(error);
+            set((state)=>({...state, bookings: []}));
+          }
+        },
+
+        editBooking: async(checkInDate, checkOutDate, guests, venueID, bookerID) => {
+          try {
+            if (!checkInDate || !checkOutDate || !guests || !venueID) {
+              throw new Error('Missing parameters in booking request');
+            }
+
+            const response = await fetch(`https://v2.api.noroff.dev/holidaze/bookings/${bookerID}`, {
+              method: 'PUT',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+            dateFrom: checkInDate,
+            dateTo: checkOutDate,
+            guests: guests,
+              }),
+            });
+            if (!response.ok) {
+              throw new Error(`Failed to edit booking. Status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            alert('Booking updated!');
+            console.log(json);
+          } catch (error) {
+            console.error('Error in editBooking:', error); 
+            throw error;
+          }
+        },
+
+        deleteBooking: async(bookerID) => {
+          try {
+            const response = await fetch(`https://v2.api.noroff.dev/holidaze/bookings/${bookerID}`, {
+              method: 'DELETE',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to delete booking');
+            }
+            
+            alert('Booking deleted!');
           } catch (error) {
             console.log(error);
             throw error;
