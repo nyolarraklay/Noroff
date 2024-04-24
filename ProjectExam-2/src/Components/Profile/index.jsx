@@ -1,61 +1,46 @@
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { Link, useParams } from 'react-router-dom'
 import useStore from '../Store'
 
-const schema = yup.object({
-    name: yup.string().required().min(3, "Name must be at least 3 characters long"),
-    email: yup.string().email("Must be a valid email address").matches(/.*@stud.noroff\.no$/, 'Email must be from noroff.no domain').required(),
-    password: yup.string().required().min(8, "Password must be at least 8 characters long"),    
-}).required()
-
-
-
-function SignUp() {
-  let { loggedIn } = useParams();
-  
-
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
-    })
-    const { registerNewUser, editProfile, user } = useStore()
+function MyProfile() {
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { userProfile, user, editProfile } = useStore()
 
     const onSubmit = (data) => {
       
-        registerNewUser(data)
+       editProfile(data)
      
     }
 
-    const onEdit = (data) => {
-        editProfile(data)
-    }
+    useEffect(() => {
+        userProfile()
+    }, [userProfile])
+
 
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-10">
-    <h2 className="text-2xl font-bold mb-4">Create Account</h2>
- <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+    <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
+ <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} >
         <div className="grid gap-y-2 gap-x-2">
             {/* Name */}               
             <div className="col-span-2">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                <input {...register("name")} type="text" name="name" id="name" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("name")} type="text" name="name" id="name" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder={user.name} disabled/>
                 <p className="form-errors">{errors.name?.message}</p>
             </div>
 
             {/* Email */}
             <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input {...register("email")} type="email" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("email")} type="email" name="email" id="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder={user.email} disabled />
                 <p className="form-errors">{errors.email?.message}</p>
             </div>
             {/* Password */}
             <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                <input {...register("password")} type="password" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("password")} type="password" name="password" id="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled />
                 <p className="form-errors">{errors.password?.message}</p>
             </div>
             
@@ -77,14 +62,13 @@ function SignUp() {
         
         </div>
       <div className="flex justify-center">
-            <button type="submit" className="bg-black text-white px-4 py-2 rounded-md">Create Account</button>
+            <button type="submit" className="bg-black text-white px-4 py-2 rounded-md">Edit Profile</button>
             </div>
-    </form>}
+    </form>
    
     <p className='text-center text-sm mt-3 font-bold'> <Link to={"/log-in"}>Already have an account? Log-In</Link> </p>
 </div>
-
   )
-
 }
-export default SignUp
+
+export default MyProfile

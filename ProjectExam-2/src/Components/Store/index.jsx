@@ -189,6 +189,64 @@ const useStore = create((set) => ({
           }
         },
 
+        registerNewUser: async(data) => {
+          try 
+          {
+            const response = await fetch(`https://v2.api.noroff.dev/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const json = await response.json();
+            const user = json.data;
+            set((state)=>({...state, user: user}));
+            alert('Account created successfully, please log in to continue.')
+       
+           
+            
+          } catch (error) {
+            console.log(error);
+          
+          }
+          },
+
+          editProfile: async(data) => {
+            try {
+              const userName = localStorage.getItem('user');
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}`, {
+                method: 'PUT',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+              if (!response.ok) {
+                throw new Error('Failed to edit profile');
+              }
+            
+              alert('Profile updated!');
+            } catch (error) {
+              console.log(error);
+              throw error;
+            }
+          },
+
+          userProfile: async() => {
+            try {
+              const userName = localStorage.getItem('user');
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}`, {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                },
+              });
+              const json = await response.json();
+              const user = json.data;
+              set((state)=>({...state, user: user}));
+            } catch (error) {
+              console.log(error);
+            }
+          },
+
 }));
 
 export default useStore;

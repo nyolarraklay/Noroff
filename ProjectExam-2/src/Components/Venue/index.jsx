@@ -1,11 +1,11 @@
 import useStore from "../Store";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import StarRating from "../StarRating";
 import { FaWifi, FaParking  } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { MdOutlinePets } from "react-icons/md";
-import { Link } from "react-router-dom";
+
 
 function VenueIndividual() {
   const { fetchVenue, venue } = useStore();

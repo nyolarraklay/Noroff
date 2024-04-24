@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useStore from '../Store'
 import styled from 'styled-components';
 import Venues from '../VenueCard'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
   background-image: url(${props => props.url});
@@ -18,6 +19,7 @@ const userName = localStorage.getItem('user')
 const [user, setUser] = useState([])
 const { allBookings, bookings } = useStore();
 const [booked, setBooked] = useState(false);
+const [loggedIn, setLoggedIn] = useState(false);  
 
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const [booked, setBooked] = useState(false);
     fetchUser();
     allBookings(userName);
     setBooked(true);
+    setLoggedIn(true);
   }
   , []);
 
@@ -83,17 +86,26 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
     <div>
     <div className='relative p-8'>
       <Container url={url}> 
-        <div className="ml-20 ">
-          <p className="text-white font-semibold">{user.name}</p>
-          <p className="text-white text-sm">{user.email}</p>
-        </div>
-      </Container>
-      <div className='absolute bottom-0 left-12'>
-        <div className='flex-shrink-0 h-20 w-20 rounded-full overflow-hidden' >
+      <div>
+    { user.bio && <h3>{user.bio}</h3>}
+
+ <div>
+        <div className='flex-shrink-0 size,20 rounded-full overflow-hidden' >
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
        
       </div>
+      </div>
+
+     
+      
+        <div className="ml-5 ">
+          <p className="text-white font-semibold">{user.name}</p>
+          <p className="text-white text-sm">{user.email}</p>
+          <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/editProfile/${loggedIn}`}>Edit Profile</Link> </button>
+        </div>
+      </Container>
+     
     </div>
     <div>
       <h2>Upcomming Bookings</h2>
