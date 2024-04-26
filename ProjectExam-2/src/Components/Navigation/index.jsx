@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { FcHome, FcOrganization, FcCalendar, FcAbout, FcAssistant } from "react-icons/fc";
 import { useState } from 'react';
+import  useStore  from '../Store';
 
 function Navigation() {
+    const { isLoggedIn } = useStore()
     const [hideNav, setHideNav] = useState(false)
     const hideNavHandler = () => {
         setHideNav(!hideNav)
@@ -16,7 +18,7 @@ function Navigation() {
         </div>
         {hideNav && 
     <div className='bg-black p-5 fixed w-full h-full z-50'>
-        <Link to='./log-in'><p className='bg-red-200 text-center cursor-pointer text-lg'>Sign in / Create Account </p> </Link>
+        <Link to='./log-in'>{!isLoggedIn ? <p className='bg-red-200 text-center cursor-pointer text-lg'> Sign in / Create Account </p> : <p className='bg-red-200 text-center cursor-pointer text-lg'> Log Out </p>} </Link>
         <ul className='flex flex-col items-start mt-5 gap-5 p-6' onClick={hideNavHandler}>
             <li className='w-full '> <Link to='/'>
                 <div className='flex items-center rounded-lg bg-white p-1 justify-center'>

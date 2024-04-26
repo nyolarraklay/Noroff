@@ -3,7 +3,7 @@ import Navigation from "../Navigation"
 function Header() {
   return (
     <div>
-      <Navigation />
+      <Navigation  />
     </div>
   )
 }

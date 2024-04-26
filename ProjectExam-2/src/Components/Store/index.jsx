@@ -8,6 +8,7 @@ const useStore = create((set) => ({
     bookings: [],
     venue: [],
     user: [],
+    isLoggedIn: false,
   
 
    
@@ -49,6 +50,7 @@ const useStore = create((set) => ({
             const accessToken = user.accessToken;
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('user', user.name);
+            set((state)=>({...state, isLoggedIn: true}));
          
             return user;
 
@@ -111,6 +113,7 @@ const useStore = create((set) => ({
 
             const json = await response.json();
             alert('Booking successful!');
+            set((state)=>({...state, isLoggedIn: true}));
             console.log(json);
           } catch (error) {
             console.log(error);
@@ -130,7 +133,7 @@ const useStore = create((set) => ({
             });
             const json = await response.json();
             const data = json.data;
-            set((state)=>({...state, bookings: data}));
+            set((state)=>({...state, bookings: data, isLoggedIn: true}));
           } catch (error) {
             console.log(error);
             set((state)=>({...state, bookings: []}));
@@ -161,6 +164,7 @@ const useStore = create((set) => ({
             }
 
             const json = await response.json();
+            set((state)=>({...state, isLoggedIn: true}));
             alert('Booking updated!');
             console.log(json);
           } catch (error) {
@@ -181,7 +185,7 @@ const useStore = create((set) => ({
             if (!response.ok) {
               throw new Error('Failed to delete booking');
             }
-            
+            set((state)=>({...state, isLoggedIn: false, bookings: []}));
             alert('Booking deleted!');
           } catch (error) {
             console.log(error);
@@ -221,7 +225,7 @@ const useStore = create((set) => ({
               if (!response.ok) {
                 throw new Error('Failed to edit profile');
               }
-            
+            set((state)=>({...state, isLoggedIn: true}));
               alert('Profile updated!');
             } catch (error) {
               console.log(error);
@@ -241,7 +245,7 @@ const useStore = create((set) => ({
               });
               const json = await response.json();
               const user = json.data;
-              set((state)=>({...state, user: user}));
+              set((state)=>({...state, user: user, isLoggedIn: true}));
             } catch (error) {
               console.log(error);
             }

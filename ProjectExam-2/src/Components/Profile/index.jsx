@@ -7,12 +7,27 @@ function MyProfile() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { userProfile, user, editProfile } = useStore()
 
-    const onSubmit = (data) => {
+    // const onSubmit = (data) => {
       
-       editProfile(data)
+    //    editProfile(data)
      
+    // }
+    const onSubmit = (data) => {
+        const formData = {
+            bio : data.bio,
+            avatar: {
+                alt: "Alt text for avatar", // You may provide a default alt text here
+                url: data.avatar
+            },
+            banner: {
+                alt: "Alt text for banner", // You may provide a default alt text here
+                url: data.banner
+            },
+            // Include other fields as needed
+        };
+    
+        editProfile(formData);
     }
-
     useEffect(() => {
         userProfile()
     }, [userProfile])
@@ -52,12 +67,12 @@ function MyProfile() {
             {/* Avatar */}
             <div>
                 <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">Avatar</label>
-                <input type="text" name="avatar" id="avatar" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("avatar")} type="text" name="avatar" id="avatar" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>
             {/* Banner */}
             <div>
                 <label htmlFor="banner" className="block text-sm font-medium text-gray-700">Banner</label>
-                <input type="text" name="banner" id="banner" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <input {...register("banner")} type="text" name="banner" id="banner" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>        
         
         </div>

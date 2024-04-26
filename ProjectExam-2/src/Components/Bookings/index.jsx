@@ -10,7 +10,8 @@ const Container = styled.div`
   position: relative;
   display: flex;
   align-items: flex-end;
-  padding: 2rem;`;
+
+  padding: 1rem;`;
 
 
 function MyBookings() {
@@ -86,24 +87,24 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
     <div>
     <div className='relative p-8'>
       <Container url={url}> 
-      <div>
+      <div className='bg-black flex'> 
+  <div>
     { user.bio && <h3>{user.bio}</h3>}
 
  <div>
-        <div className='flex-shrink-0 size,20 rounded-full overflow-hidden' >
+        <div className='flex-shrink-0 size,20 rounded-sm overflow-hidden' >
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
        
       </div>
       </div>
-
-     
-      
         <div className="ml-5 ">
           <p className="text-white font-semibold">{user.name}</p>
           <p className="text-white text-sm">{user.email}</p>
           <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/editProfile/${loggedIn}`}>Edit Profile</Link> </button>
         </div>
+      </div>
+    
       </Container>
      
     </div>
