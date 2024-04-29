@@ -1,29 +1,25 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useStore from '../Store'
 
 function MyProfile() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { userProfile, user, editProfile } = useStore()
 
-    // const onSubmit = (data) => {
-      
-    //    editProfile(data)
-     
-    // }
+ 
     const onSubmit = (data) => {
         const formData = {
             bio : data.bio,
             avatar: {
-                alt: "Alt text for avatar", // You may provide a default alt text here
+                alt: "Alt text for avatar", 
                 url: data.avatar
             },
             banner: {
-                alt: "Alt text for banner", // You may provide a default alt text here
+                alt: "Alt text for banner",
                 url: data.banner
             },
-            // Include other fields as needed
+           
         };
     
         editProfile(formData);

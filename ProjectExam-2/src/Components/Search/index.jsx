@@ -5,7 +5,7 @@ function SearchResults() {
     const location = useLocation();
     const { results } = location.state || {};
 
-    if (!results || results.length === 0) {
+    if (!results || results.length === 0 || results === undefined) {
         return (
             <div className="text-center">
                 <h2 className="font-bold">No results found</h2>

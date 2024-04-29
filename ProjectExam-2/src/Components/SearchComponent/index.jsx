@@ -19,12 +19,16 @@ function Search() {
       };
 
     const fetchSearchVenues = (searchText) => {
+      
       const filteredVenues = venues.filter((venue) => venue && venue.name && venue.name.toLowerCase().includes(searchText.toLowerCase()))
       setSearchResults(filteredVenues);
       navigate('/search-results', { state: { results: filteredVenues } });
     };
 
     const handleChange = () => {
+      if (searchText === '' || searchText === null) {
+        return;
+      }
       fetchSearchVenues(searchText);
     };
   

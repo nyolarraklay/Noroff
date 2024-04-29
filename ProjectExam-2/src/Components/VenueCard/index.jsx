@@ -4,16 +4,28 @@ import StarRating from "../StarRating";
 
 
 function Venue({ venue, isBooked }) {
-  const media = venue.media[0];
+
+
+  if (!venue) {
+    return <div>Loading...</div>; 
+  }
+
+  const media = venue.media;
   const location = venue.location;
- 
+  const image = media && media.length > 0 ? (
+    <img src={media[0].url} alt={media[0].alt} className="object-cover rounded-md size-32" />
+  ) : null
+
+  
+
+
 
   return (
     
     <div className="grid grid-cols-2 items-center  bg-white p-3">
-      <div>
-        <img src={media.url} alt={media.alt} className="object-cover rounded-md size-32" />
-      </div>
+     <div>
+    {image}
+     </div>
       <div>
         <div className="flex justify-between flex-wrap">
              <h2 className="font-bold ">{venue.name}</h2>

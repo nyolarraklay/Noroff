@@ -251,6 +251,18 @@ const useStore = create((set) => ({
             }
           },
 
+          logOut: async() => {
+            try {
+              localStorage.removeItem('accessToken');
+              localStorage.removeItem('apiKey');
+              localStorage.removeItem('user');
+              set((state)=>({...state, isLoggedIn: false}));
+              alert('Logged out successfully');
+            } catch (error) {
+              console.log(error);
+            }
+          },
+
 }));
 
 export default useStore;

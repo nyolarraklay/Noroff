@@ -28,7 +28,8 @@ function LogIn() {
                  
                 const user = await logIn(data);
                 setLogInUser(true);
-                navigate('/bookings')
+                setTimeout(() => {
+                navigate('/bookings')},1000);
                 apiKey(user.accessToken);
 
                 }
