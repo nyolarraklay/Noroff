@@ -21,6 +21,27 @@ const [user, setUser] = useState([])
 const { allBookings, bookings } = useStore();
 const [booked, setBooked] = useState(false);
 const [loggedIn, setLoggedIn] = useState(false);  
+const [showVenues, setShowVenues] = useState(true);
+const [showBookings, setShowBookings] = useState(false);
+const [showUsers, setShowUsers] = useState(false);
+
+const handleShowVenues = () => {
+  setShowVenues(true);
+  setShowBookings(false);
+  setShowUsers(false);
+}
+
+const handleShowBookings = () => {
+  setShowVenues(false);
+  setShowBookings(true);
+  setShowUsers(false);
+}
+
+const handleShowUsers = () => {
+  setShowVenues(false);
+  setShowBookings(false);
+  setShowUsers(true);
+}
 
 
   useEffect(() => {
@@ -108,17 +129,47 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
       </Container>
      
     </div>
+    {!user.venueManager  ? <div>
     <div>
       <h2>Upcomming Bookings</h2>
 
     </div>
     <div>
       <h2 className='text-center'>My Bookings</h2>
-    <div className='p-10 flex flex-col gap-6'>
-      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} isBooked={booked} />)}
-       
+      <div className='p-10 flex flex-col gap-6'>
+      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
+      </div>
     </div>
-    </div>
+    </div> : <div>
+      <h2> You are a venue manager</h2>
+      <div>
+        <ul className='flex justify-evenly'>
+          <li><button className='px-1 py-2 bg-white rounded-md' onClick={handleShowVenues}>All Venues</button></li>
+          <li><button className='px-1 py-2 bg-white rounded-md' onClick={handleShowBookings}>All Bookings</button></li>
+          <li><button className='px-1 py-2 bg-white rounded-md' onClick={handleShowUsers}>All Users</button></li>
+        </ul>
+      </div>
+      <div> 
+        {showVenues && <div>
+          <h2>All Venues</h2>
+          <div>
+            <Venues />
+          </div>
+        </div>}
+        {showBookings && <div>
+          <h2>All Bookings</h2>
+          <div>
+            <Venues />
+          </div>
+        </div>}
+        {showUsers && <div>
+          <h2>All Users</h2>
+          <div>
+            <Venues />
+          </div>
+        </div>}
+      </div>
+    </div>}
     
    
 

@@ -12,7 +12,6 @@ import BookNow from '../BookNow';
 import LogIn from '../LogIn';
 import SignUp from '../Signup';
 import VenueManagerSignUp from '../VenueManagerSignUp';
-import VenueManagerLogIn from '../VenueManagerLogIn';
 import MyProfile from '../Profile';
 
 const router = createBrowserRouter([{
@@ -32,7 +31,6 @@ const router = createBrowserRouter([{
         { path: "/log-in", element: <LogIn /> },
         { path: "/sign-up", element: <SignUp /> },
         { path: "/sign-up/venue-manager", element: <VenueManagerSignUp /> },
-        { path: "/log-in/venue-manager", element: <VenueManagerLogIn /> },
         { path: "/editProfile/:loggedIn", element: <MyProfile /> },
 
     ]

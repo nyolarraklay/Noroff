@@ -6,9 +6,11 @@ import useStore from '../Store'
 function MyProfile() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const { userProfile, user, editProfile } = useStore()
+    const [isLoading, setIsLoading] = useState(false);
 
  
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+        setIsLoading(true);
         const formData = {
             bio : data.bio,
             avatar: {
@@ -22,7 +24,8 @@ function MyProfile() {
            
         };
     
-        editProfile(formData);
+       await editProfile(formData);
+        setIsLoading(false);
     }
     useEffect(() => {
         userProfile()
@@ -70,7 +73,7 @@ function MyProfile() {
                 <label htmlFor="banner" className="block text-sm font-medium text-gray-700">Banner</label>
                 <input {...register("banner")} type="text" name="banner" id="banner" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>        
-        
+            {isLoading && <div>Loading...</div>} 
         </div>
       <div className="flex justify-center">
             <button type="submit" className="bg-black text-white px-4 py-2 rounded-md">Edit Profile</button>

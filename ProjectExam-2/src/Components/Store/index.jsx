@@ -9,6 +9,7 @@ const useStore = create((set) => ({
     venue: [],
     user: [],
     isLoggedIn: false,
+    isVenueManager: false,
   
 
    
@@ -193,16 +194,16 @@ const useStore = create((set) => ({
           }
         },
 
-        registerNewUser: async(data) => {
+        registerNewUser: async(formData, isVenueManager) => {
           try 
           {
-            const response = await fetch(`https://v2.api.noroff.dev/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const response = await fetch(`https://v2.api.noroff.dev/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
             const json = await response.json();
             const user = json.data;
-            set((state)=>({...state, user: user}));
+            set((state)=>({...state, user: user, isVenueManager: isVenueManager}));
             alert('Account created successfully, please log in to continue.')
        
-           
+        
             
           } catch (error) {
             console.log(error);
