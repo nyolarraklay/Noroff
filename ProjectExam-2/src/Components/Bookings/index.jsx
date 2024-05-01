@@ -3,6 +3,7 @@ import useStore from '../Store'
 import styled from 'styled-components';
 import Venues from '../VenueCard'
 import { Link } from 'react-router-dom'
+import { get } from 'react-hook-form';
 
 const Container = styled.div`
   background-image: url(${props => props.url});
@@ -18,12 +19,13 @@ function MyBookings() {
 const apiKey = localStorage.getItem('apiKey')
 const userName = localStorage.getItem('user')
 const [user, setUser] = useState([])
-const { allBookings, bookings } = useStore();
+const { allBookings, bookings, getAllProfiles, users, searchProfiles } = useStore();
 const [booked, setBooked] = useState(false);
 const [loggedIn, setLoggedIn] = useState(false);  
 const [showVenues, setShowVenues] = useState(true);
 const [showBookings, setShowBookings] = useState(false);
 const [showUsers, setShowUsers] = useState(false);
+const [searchResults, setSearchResults] = useState([]);
 
 const handleShowVenues = () => {
   setShowVenues(true);
@@ -44,10 +46,12 @@ const handleShowUsers = () => {
 }
 
 
+
+
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/?_bookings=true`, {
+        const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/?_bookings=true&_venues=true`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -62,14 +66,15 @@ const handleShowUsers = () => {
       }
     }
     fetchUser();
+    getAllProfiles();
     allBookings(userName);
     setBooked(true);
     setLoggedIn(true);
   }
   , []);
 
-
-  const venues = user.bookings || []; 
+  const venues = user.venues || []; 
+  const userBookings = user.bookings || [];
   const bookedVenues = venues
     .filter(venue => venue) 
     .map(venue => venue.venue);
@@ -79,7 +84,7 @@ const handleShowUsers = () => {
     
     const currentDate = new Date();
 
-    const futureBookings = venues.filter(venue => {
+    const futureBookings = userBookings.filter(venue => {
       const checkInDate = new Date(venue.dateFrom);
       return checkInDate >= currentDate;
     });
@@ -101,7 +106,16 @@ const fullAvatar = [];
 if (avatarUrl) fullAvatar.push(avatarUrl);
 if (avatarAlt) fullAvatar.push(avatarAlt);
 
-
+async function handleSearch(query) {
+  const result = await searchProfiles(query);
+  if (result) {
+    console.log("Search result:", result);
+    setSearchResults(result); 
+  } else {
+    console.log("No result");
+  }
+}
+  
 
 
   return (
@@ -152,8 +166,9 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
       <div> 
         {showVenues && <div>
           <h2>All Venues</h2>
+          <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/addVenue/${loggedIn}`}>Add Venue</Link> </button>
           <div>
-            <Venues />
+            {venues.map((venue) => <Venues venue={venue} />)}
           </div>
         </div>}
         {showBookings && <div>
@@ -164,8 +179,31 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
         </div>}
         {showUsers && <div>
           <h2>All Users</h2>
+          <div className="flex items-center justify-between p-2 bg-white rounded-lg mt-2 w-full">
+        <label htmlFor="searchInput" className="sr-only">Search for a profile...</label>
+        <input 
+          type="search" 
+          id="searchInput"
+          className="w-full ml-2 bg-transparent focus:outline-none text-black font-bold"
+          placeholder="Search for a user..."
+          onChange={(e) => handleSearch(e.target.value)} // Call handleSearch on input change
+        />
+      </div>
+
           <div>
-            <Venues />
+          {searchResults.map((user, index) => (
+                    <Container key={index}>
+                      <div className='bg-black flex'>
+                        <div>
+                          <img className="h-20 w-20 object-cover rounded-full" src={user.avatar.url} alt={user.avatar.alt}/>
+                        </div>
+                        <div className="ml-5 ">
+                          <p className="text-white font-semibold">{user.name}</p>
+                          <p className="text-white text-sm">{user.email}</p>
+                        </div>
+                      </div>
+                    </Container>
+                  ))}
           </div>
         </div>}
       </div>

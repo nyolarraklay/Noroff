@@ -8,8 +8,10 @@ const useStore = create((set) => ({
     bookings: [],
     venue: [],
     user: [],
+    users: [],
     isLoggedIn: false,
     isVenueManager: false,
+    createdVenues: [],
   
 
    
@@ -263,6 +265,86 @@ const useStore = create((set) => ({
               console.log(error);
             }
           },
+
+          getAllProfiles: async() => {
+            try {
+              const response = await fetch('https://v2.api.noroff.dev/holidaze/profiles', {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                },
+              });
+              const json = await response.json();
+              const data = json.data;
+              set((state)=>({...state, users: data, isLoggedIn: true}));
+            } catch (error) {
+              console.log(error);
+            }
+          },
+
+          searchProfiles: async(query) => {
+            try {
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/search?q=${query}`, {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                },
+              });
+              const json = await response.json();
+              const data = json.data;
+              console.log(data);
+              return data;
+            } catch (error) {
+              console.error("Error searching profiles:", error);
+              return null;
+            }
+          },
+
+          searchVenues: async(query) => {
+            try {
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/search?q=${query}`, {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                },
+              });
+              const json = await response.json();
+              const data = json.data;
+              console.log(data);
+              return data;
+            } catch (error) {
+              console.error("Error searching venues:", error);
+              return null;
+            }
+          },
+
+          createVenue: async(data) => {
+            try {
+              const response = await fetch('https://v2.api.noroff.dev/holidaze/venues', {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+              if (!response.ok) {
+                throw new Error('Failed to create venue');
+              }
+              set((state)=>({...state, createdVenues: []}));
+              alert('Venue created!');
+            } catch (error) {
+              console.log(error);
+              throw error;
+            }
+          }
+
+
+
 
 }));
 
