@@ -3,7 +3,7 @@ import useStore from '../Store'
 import styled from 'styled-components';
 import Venues from '../VenueCard'
 import { Link } from 'react-router-dom'
-import { get } from 'react-hook-form';
+
 
 const Container = styled.div`
   background-image: url(${props => props.url});
@@ -19,13 +19,14 @@ function MyBookings() {
 const apiKey = localStorage.getItem('apiKey')
 const userName = localStorage.getItem('user')
 const [user, setUser] = useState([])
-const { allBookings, bookings, getAllProfiles, users, searchProfiles } = useStore();
+const { allBookings, bookings, getAllProfiles, users, searchProfiles} = useStore();
 const [booked, setBooked] = useState(false);
 const [loggedIn, setLoggedIn] = useState(false);  
 const [showVenues, setShowVenues] = useState(true);
 const [showBookings, setShowBookings] = useState(false);
 const [showUsers, setShowUsers] = useState(false);
 const [searchResults, setSearchResults] = useState([]);
+const [isVenueManager, setIsVenueManager] = useState(false);
 
 const handleShowVenues = () => {
   setShowVenues(true);
@@ -70,12 +71,14 @@ const handleShowUsers = () => {
     allBookings(userName);
     setBooked(true);
     setLoggedIn(true);
+    setIsVenueManager(true);
   }
   , []);
 
   const venues = user.venues || []; 
+  
   const userBookings = user.bookings || [];
-  const bookedVenues = venues
+  const bookedVenues = userBookings
     .filter(venue => venue) 
     .map(venue => venue.venue);
 
@@ -168,7 +171,7 @@ async function handleSearch(query) {
           <h2>All Venues</h2>
           <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/addVenue/${loggedIn}`}>Add Venue</Link> </button>
           <div>
-            {venues.map((venue) => <Venues venue={venue} />)}
+            {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
         </div>}
         {showBookings && <div>

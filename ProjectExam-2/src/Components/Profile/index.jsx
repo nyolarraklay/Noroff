@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import useStore from '../Store'
 
 function MyProfile() {
@@ -80,7 +79,6 @@ function MyProfile() {
             </div>
     </form>
    
-    <p className='text-center text-sm mt-3 font-bold'> <Link to={"/log-in"}>Already have an account? Log-In</Link> </p>
 </div>
   )
 }

@@ -341,8 +341,49 @@ const useStore = create((set) => ({
               console.log(error);
               throw error;
             }
-          }
+          },
 
+          editVenue: async(data, venueID) => {
+            try {
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${venueID}`, {
+                method: 'PUT',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+              if (!response.ok) {
+                throw new Error('Failed to edit venue');
+              }
+              set((state)=>({...state, createdVenues: []}));
+              alert('Venue updated!');
+            } catch (error) {
+              console.log(error);
+              throw error;
+            }
+          },
+
+          deleteVenue: async(venueID) => {
+            try {
+              const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${venueID}`, {
+                method: 'DELETE',
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
+                },
+              });
+              if (!response.ok) {
+                throw new Error('Failed to delete venue');
+              }
+              set((state)=>({...state, createdVenues: []}));
+              alert('Venue deleted!');
+            } catch (error) {
+              console.log(error);
+              throw error;
+            }
+          },
 
 
 

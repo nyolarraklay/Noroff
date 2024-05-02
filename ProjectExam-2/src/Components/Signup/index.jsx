@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -15,7 +15,7 @@ const schema = yup.object({
 
 
 function SignUp() {
-  let { loggedIn } = useParams();
+ 
   
 
     const { register, handleSubmit, formState: { errors } } = useForm({

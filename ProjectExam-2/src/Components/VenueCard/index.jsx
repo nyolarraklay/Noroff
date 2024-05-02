@@ -3,7 +3,7 @@ import StarRating from "../StarRating";
 
 
 
-function Venue({ venue, isBooked }) {
+function Venues({ venue, isBooked, venueManager }) {
 
 
   if (!venue) {
@@ -39,8 +39,9 @@ function Venue({ venue, isBooked }) {
           </div>
             <p>Max Guest: {venue.maxGuests}</p>
         </div>
-        {!isBooked ? <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"><Link to={`/venue/${venue.id}`}>Book</Link></button> : <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"><Link to={`/book-now/${venue.id}/${isBooked}`}>Edit Booking</Link></button>}
-  
+        {venueManager ? (<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"><Link to={`/edit-venue/${venue.id}/${venueManager}`}>Edit</Link></button> ) : (<div>
+        {!isBooked ? <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"><Link to={`/venue/${venue.id}`}>Book</Link></button> : <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"><Link to={`/book-edit/${venue.id}/${isBooked}`}>Edit Booking</Link></button>} </div>)
+}
      
       </div>
     </div>
@@ -48,4 +49,4 @@ function Venue({ venue, isBooked }) {
   )
 }
 
-export default Venue
+export default Venues

@@ -14,6 +14,9 @@ import SignUp from '../Signup';
 import VenueManagerSignUp from '../VenueManagerSignUp';
 import MyProfile from '../Profile';
 import CreateVenueForm from '../CreateVenue';
+import EditVenueForm from '../EditVenue';
+
+
 
 const router = createBrowserRouter([{
 
@@ -29,11 +32,14 @@ const router = createBrowserRouter([{
         { path: "/venue/:id", element: <VenueIndividual /> },
         { path: '/search-results', element: <SearchResults /> },
         { path: "/book-now/:venueId", element: <BookNow /> },
+        { path: "/book-edit/:venueId/:isBooked", element: <BookNow /> },
         { path: "/log-in", element: <LogIn /> },
         { path: "/sign-up", element: <SignUp /> },
         { path: "/sign-up/venue-manager", element: <VenueManagerSignUp /> },
         { path: "/editProfile/:loggedIn", element: <MyProfile /> },
         { path: "/addVenue/:loggedIn", element: <CreateVenueForm /> },
+        { path: "/edit-venue/:venueId/:venueManager", element: <CreateVenueForm /> },
+     
 
     ]
 }])
