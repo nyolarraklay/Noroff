@@ -3,6 +3,7 @@ import useStore from '../Store'
 import styled from 'styled-components';
 import Venues from '../VenueCard'
 import { Link } from 'react-router-dom'
+import moment from 'moment';
 
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ function MyBookings() {
 const apiKey = localStorage.getItem('apiKey')
 const userName = localStorage.getItem('user')
 const [user, setUser] = useState([])
-const { allBookings, bookings, getAllProfiles, users, searchProfiles} = useStore();
+const {  searchProfiles, fetchVenue, createdVenues} = useStore();
 const [booked, setBooked] = useState(false);
 const [loggedIn, setLoggedIn] = useState(false);  
 const [showVenues, setShowVenues] = useState(true);
@@ -27,6 +28,8 @@ const [showBookings, setShowBookings] = useState(false);
 const [showUsers, setShowUsers] = useState(false);
 const [searchResults, setSearchResults] = useState([]);
 const [isVenueManager, setIsVenueManager] = useState(false);
+const [venues, setVenues] = useState([]);
+
 
 const handleShowVenues = () => {
   setShowVenues(true);
@@ -48,34 +51,50 @@ const handleShowUsers = () => {
 
 
 
-
-  useEffect(() => {
-    async function fetchUser() {
+useEffect(() => {
+  async function fetchData() {
       try {
-        const response = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/?_bookings=true&_venues=true`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            "X-Noroff-API-Key": apiKey,
-          }
-        });
-        const json = await response.json();
-        const user = json.data
-        setUser(user);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchUser();
-    getAllProfiles();
-    allBookings(userName);
-    setBooked(true);
-    setLoggedIn(true);
-    setIsVenueManager(true);
-  }
-  , []);
+          // Fetch user data
+          const userResponse = await fetch(`https://v2.api.noroff.dev/holidaze/profiles/${userName}/?_bookings=true&_venues=true`, {
+              method: 'GET',
+              headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                  "X-Noroff-API-Key": apiKey,
+              }
+          });
+          const userData = await userResponse.json();
+          if (!userData.data) {
+            throw new Error("User data is not available");
+        }
 
-  const venues = user.venues || []; 
+          setUser(userData.data);
+
+          setVenues(userData.data.venues);
+          // Set states
+          setBooked(true);
+          setLoggedIn(true);
+          setIsVenueManager(true);
+
+          // Fetch venues
+          const venueIds = userData.data.venues.map(venue => venue.id);
+          venueIds.forEach((id) => {
+            fetchVenue(id);
+          });
+    
+      
+      } catch (error) {
+          console.error('Error fetching data:', error);
+          // Handle error (e.g., show error message to the user)
+      }
+  }
+
+  fetchData();
+}, [userName, apiKey]); 
+
+
+const bookingsByVenue = createdVenues.map(venue => venue.bookings)
+console.log(bookingsByVenue);
+
   
   const userBookings = user.bookings || [];
   const bookedVenues = userBookings
@@ -83,8 +102,6 @@ const handleShowUsers = () => {
     .map(venue => venue.venue);
 
 
-
-    
     const currentDate = new Date();
 
     const futureBookings = userBookings.filter(venue => {
@@ -93,9 +110,6 @@ const handleShowUsers = () => {
     });
 
     
-
- 
-
 const banner = user.banner
 const { url:url, alt:alt } = banner || {};
 const fullBanner = [];
@@ -154,7 +168,8 @@ async function handleSearch(query) {
     <div>
       <h2 className='text-center'>My Bookings</h2>
       <div className='p-10 flex flex-col gap-6'>
-      {bookedVenues.map((venue) => <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
+      {bookedVenues.map((venue) =>
+       <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
       </div>
     </div>
     </div> : <div>
@@ -174,10 +189,21 @@ async function handleSearch(query) {
             {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
         </div>}
-        {showBookings && <div>
-          <h2>All Bookings</h2>
-          <div>
-            <Venues />
+        {showBookings && <div className='mx-2 my-4'>
+          <h2 className='font-bold'>Bookings by Venue</h2>
+          <div className='p-5'>
+            {bookingsByVenue.map((booking) =>
+            {const { id,  dateFrom, dateTo } = booking;
+            const checkInDate = moment(dateFrom).format('MMMM Do YYYY');
+            const checkOutDate = moment(dateTo).format('MMMM Do YYYY');
+            return <div key={id}> 
+           
+            <p>Check in: {checkInDate}</p>
+            <p>Check out: {checkOutDate}</p>
+            <p>Guests: {booking.guests}</p>
+           
+
+            </div>})}
           </div>
         </div>}
         {showUsers && <div>

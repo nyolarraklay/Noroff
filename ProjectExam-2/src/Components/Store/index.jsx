@@ -19,7 +19,7 @@ const useStore = create((set) => ({
     fetchVenues: async () => {
      try {
         set((state)=>({...state, venues: []}));
-        const response = await fetch('https://v2.api.noroff.dev/holidaze/venues/');
+        const response = await fetch('https://v2.api.noroff.dev/holidaze/venues/?sortOrder=asc');
         const json = await response.json();
         const data = json.data;
         set((state)=>({...state, venues: data}));
@@ -35,10 +35,11 @@ const useStore = create((set) => ({
         const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}/?_bookings=true`);
         const json = await response.json();
         const data = json.data;
-        set((state)=>({...state, venue: data}));
+        set((state)=>({...state, createdVenues: [...state.createdVenues, data]}));
+       
       } catch (error) {
         console.log(error);
-        set((state)=>({...state, venue: []}));
+        set((state)=>({...state, createdVenues: []}));
       }
       },
 
@@ -261,23 +262,6 @@ const useStore = create((set) => ({
               localStorage.removeItem('user');
               set((state)=>({...state, isLoggedIn: false}));
               alert('Logged out successfully');
-            } catch (error) {
-              console.log(error);
-            }
-          },
-
-          getAllProfiles: async() => {
-            try {
-              const response = await fetch('https://v2.api.noroff.dev/holidaze/profiles', {
-                method: 'GET',
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                  "X-Noroff-API-Key": localStorage.getItem('apiKey'),
-                },
-              });
-              const json = await response.json();
-              const data = json.data;
-              set((state)=>({...state, users: data, isLoggedIn: true}));
             } catch (error) {
               console.log(error);
             }
