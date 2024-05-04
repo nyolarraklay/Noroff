@@ -92,8 +92,31 @@ useEffect(() => {
 }, [userName, apiKey]); 
 
 
-const bookingsByVenue = createdVenues.map(venue => venue.bookings)
-console.log(bookingsByVenue);
+const bookingsByVenue = createdVenues.map((venue, index) => {
+  const bookings = venue.bookings;
+  return (
+    <div key={index}>
+      <h3> Venue: {venue.name}</h3>
+      <ol>
+        {bookings.map((booking, index) => {
+          const checkInDate = moment(booking.dateFrom).format('YYYY-MM-DD');
+          const checkOutDate = moment(booking.dateTo).format('YYYY-MM-DD');
+          return (
+            <li key={index}>
+              <p>Customer: {booking.customer.name}</p>
+              <p>Booking dates: {checkInDate} to {checkOutDate}</p>
+              
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+});
+
+
+
+
 
   
   const userBookings = user.bookings || [];
@@ -189,22 +212,10 @@ async function handleSearch(query) {
             {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
         </div>}
-        {showBookings && <div className='mx-2 my-4'>
+        {showBookings && <div className='mx-2 my-4' >
           <h2 className='font-bold'>Bookings by Venue</h2>
-          <div className='p-5'>
-            {bookingsByVenue.map((booking) =>
-            {const { id,  dateFrom, dateTo } = booking;
-            const checkInDate = moment(dateFrom).format('MMMM Do YYYY');
-            const checkOutDate = moment(dateTo).format('MMMM Do YYYY');
-            return <div key={id}> 
-           
-            <p>Check in: {checkInDate}</p>
-            <p>Check out: {checkOutDate}</p>
-            <p>Guests: {booking.guests}</p>
-           
-
-            </div>})}
-          </div>
+         {bookingsByVenue}
+         
         </div>}
         {showUsers && <div>
           <h2>All Users</h2>
