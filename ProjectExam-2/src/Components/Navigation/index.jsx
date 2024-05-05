@@ -64,12 +64,12 @@ function Navigation() {
                     <p className='text-xl'>  Contacts </p>
                 </div></Link></li>
         </ul>
-        <div className='text-white text-center p-6 m-6 text-sm font-bold' onClick={hideNavHandler}>
+        {!isLoggedIn && <div className='text-white text-center p-6 m-6 text-sm font-bold' onClick={hideNavHandler}>
             <Link to="/sign-up/venue-manager">
             <p>Are you a venue manager?</p>
             <p>Click here</p>
             </Link>
-        </div>
+        </div>}
        
     </div>
     

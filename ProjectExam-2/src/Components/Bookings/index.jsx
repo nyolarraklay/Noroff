@@ -15,6 +15,10 @@ const Container = styled.div`
 
   padding: 1rem;`;
 
+  const fetchedVenues = new Set();
+
+
+
 
 function MyBookings() {
 const apiKey = localStorage.getItem('apiKey')
@@ -37,11 +41,26 @@ const handleShowVenues = () => {
   setShowUsers(false);
 }
 
+
 const handleShowBookings = () => {
   setShowVenues(false);
   setShowBookings(true);
   setShowUsers(false);
-}
+
+  const venueIds = venues.map((venue) => venue.id);
+
+  const uniqueVenueIds = new Set(venueIds);
+
+  uniqueVenueIds.forEach((id) => {
+ if (!fetchedVenues.has(id)) {
+    fetchVenue(id);
+    fetchedVenues.add(id);
+ }
+  });
+
+  }
+  
+
 
 const handleShowUsers = () => {
   setShowVenues(false);
@@ -75,12 +94,7 @@ useEffect(() => {
           setLoggedIn(true);
           setIsVenueManager(true);
 
-          // Fetch venues
-          const venueIds = userData.data.venues.map(venue => venue.id);
-          venueIds.forEach((id) => {
-            fetchVenue(id);
-          });
-    
+       
       
       } catch (error) {
           console.error('Error fetching data:', error);
@@ -92,20 +106,19 @@ useEffect(() => {
 }, [userName, apiKey]); 
 
 
-const bookingsByVenue = createdVenues.map((venue, index) => {
+const bookingsByVenue = createdVenues.map((venue) => {
   const bookings = venue.bookings;
   return (
-    <div key={index}>
-      <h3> Venue: {venue.name}</h3>
-      <ol>
-        {bookings.map((booking, index) => {
-          const checkInDate = moment(booking.dateFrom).format('YYYY-MM-DD');
-          const checkOutDate = moment(booking.dateTo).format('YYYY-MM-DD');
+    <div key={venue.id} className='p-2'>
+      <h2 className='font-bold text-lg'> Venue: {venue.name}</h2>
+      <ol className='list-decimal pl-5'>
+        {bookings.map((booking) => {
+          const checkInDate = moment(booking.dateFrom).format('DD-MMM-YY');
+          const checkOutDate = moment(booking.dateTo).format('DD-MMM-YY');
           return (
-            <li key={index}>
-              <p>Customer: {booking.customer.name}</p>
-              <p>Booking dates: {checkInDate} to {checkOutDate}</p>
-              
+            <li key={booking.id}>
+              <p className='text-md'>Customer's Name: <span className='font-bold'> {booking.customer.name}</span></p>
+              <p>Booking dates: {checkInDate} to {checkOutDate}</p> 
             </li>
           );
         })}
@@ -213,7 +226,7 @@ async function handleSearch(query) {
           </div>
         </div>}
         {showBookings && <div className='mx-2 my-4' >
-          <h2 className='font-bold'>Bookings by Venue</h2>
+          <h1 className='font-bold text-2xl text-center'>Bookings by Venue</h1>
          {bookingsByVenue}
          
         </div>}
