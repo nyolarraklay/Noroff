@@ -9,7 +9,7 @@ const useStore = create((set) => ({
     venue: [],
     user: [],
     users: [],
-    isLoggedIn: false,
+    isLoggedIn: localStorage.getItem('loggedIn') === 'true' ? true : false,
     isVenueManager: false,
     createdVenues: [],
   
@@ -54,6 +54,7 @@ const useStore = create((set) => ({
             const accessToken = user.accessToken;
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('user', user.name);
+            localStorage.setItem('loggedIn', true);
             set((state)=>({...state, isLoggedIn: true}));
          
             return user;
@@ -260,6 +261,7 @@ const useStore = create((set) => ({
               localStorage.removeItem('accessToken');
               localStorage.removeItem('apiKey');
               localStorage.removeItem('user');
+              localStorage.removeItem('loggedIn');
               set((state)=>({...state, isLoggedIn: false}));
               alert('Logged out successfully');
             } catch (error) {
