@@ -140,12 +140,7 @@ const bookingsByVenue = createdVenues.map((venue) => {
 
     const currentDate = new Date();
 
-    const futureBookings = userBookings.filter(venue => {
-      const checkInDate = new Date(venue.dateFrom);
-      return checkInDate >= currentDate;
-    });
 
-    
 const banner = user.banner
 const { url:url, alt:alt } = banner || {};
 const fullBanner = [];
@@ -196,19 +191,16 @@ async function handleSearch(query) {
       </Container>
      
     </div>
-    {!user.venueManager  ? <div>
-    <div>
-      <h2>Upcomming Bookings</h2>
+    {!user.venueManager  ? 
 
-    </div>
     <div>
-      <h2 className='text-center'>My Bookings</h2>
+      <h2 className='text-center text-2xl font-bold'>My Bookings</h2>
       <div className='p-10 flex flex-col gap-6'>
       {bookedVenues.map((venue) =>
        <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
       </div>
     </div>
-    </div> : <div>
+     : <div>
       <h2> You are a venue manager</h2>
       <div>
         <ul className='flex justify-evenly'>

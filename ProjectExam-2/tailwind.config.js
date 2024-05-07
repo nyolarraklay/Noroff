@@ -8,6 +8,8 @@ export default {
     extend: {
       backgroundImage: {
         'background-home': "url(/src/assets/beach-bg.avif)",
+        'background-home-lg': "url(/src/assets/beachcover.webp)",
+
       }
     },
   },
