@@ -19,7 +19,7 @@ const useStore = create((set) => ({
     fetchVenues: async () => {
      try {
         set((state)=>({...state, venues: []}));
-        const response = await fetch('https://v2.api.noroff.dev/holidaze/venues/?sortOrder=asc');
+        const response = await fetch('https://v2.api.noroff.dev/holidaze/venues/?sortOrder=desc');
         const json = await response.json();
         const data = json.data;
         set((state)=>({...state, venues: data}));

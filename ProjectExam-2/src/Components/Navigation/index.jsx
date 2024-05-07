@@ -23,7 +23,7 @@ function Navigation() {
   return (
 
     <div>
-        <div className='flex justify-between items-center bg-gray-200 p-2'>
+        <div className='flex justify-between items-center bg-background-color-navigation p-2'>
             <p className='text-2xl'>BOOKIPEDIA.com</p>
             <button onClick={hideNavHandler} className='text-2xl cursor-pointer'>☰</button>
         </div>

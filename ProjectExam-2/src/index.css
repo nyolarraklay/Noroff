@@ -5,3 +5,13 @@
 .fc-toolbar-title {
     @apply text-xl !important; 
   }
+
+  button {
+    @apply bg-background-button text-white font-bold py-2 px-4 rounded shadow-lg uppercase font-sans text-sm;
+  }
+
+  .location-heading {
+    @apply text-2xl font-bold font-mono;
+  }
+
+
