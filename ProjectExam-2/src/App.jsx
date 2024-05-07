@@ -4,7 +4,7 @@ function App() {
 
 
   return (
-    <div className="bg-blue-500">   
+    <div className="bg-background-destinations">   
       <Layout />
     </div>
   )
