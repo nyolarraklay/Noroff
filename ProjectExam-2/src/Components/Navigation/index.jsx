@@ -1,8 +1,39 @@
-import { Link } from 'react-router-dom'
-import { FcHome, FcOrganization, FcCalendar, FcAbout, FcAssistant } from "react-icons/fc";
+import { NavLink, Link } from 'react-router-dom'
 import { useState } from 'react';
 import  useStore  from '../Store';
 import { useNavigate } from 'react-router-dom';
+import { MdClose, MdOutlineMenu } from "react-icons/md";
+
+
+function NavLinks()  {
+    const { isLoggedIn } = useStore()
+    return (
+        < >  
+           <NavLink to='/'>
+                <p>  Home </p>
+            </NavLink>
+            <NavLink to='/venues'>
+                <p>  Venues </p>
+            </NavLink>
+          
+                {isLoggedIn ? 
+            <NavLink to='/bookings'>
+                <p>  Bookings </p>
+            </NavLink> : 
+            <NavLink to='./log-in'>
+                <p>  Bookings </p>
+            </NavLink>}
+           <NavLink to='/about'>
+               <p>  About  </p>
+                
+            </NavLink>
+            <NavLink to='/contacts'>
+                <p>  Contacts </p>
+            </NavLink>
+        
+        </ >
+    )
+}
 
 
 function Navigation() {
@@ -14,6 +45,9 @@ function Navigation() {
     const navigate = useNavigate()
 
 
+    
+
+
     const logOutHandler = () => {
         logOut()
         navigate('/')
@@ -21,49 +55,55 @@ function Navigation() {
     }
 
   return (
+<>
+    <div className="md:col-span-2 md:grid  ">
+        <nav className='flex justify-end' >
+            <div className='hidden md:flex md:mx-2 md:space-x-2  '>
+                <div className='flex items-center space-x-1 md:space-x-2' id='navMenu'>
+                     <NavLinks />
+                </div>
+               
+                {!isLoggedIn ?   <div className='flex items-center space-x-2'><Link to='/log-in'><p>Sign in</p></Link> <Link to='./sign-up'><button> Create Account </button></Link> </div>   : <button  onClick={logOutHandler}> Log Out </button>}    
+            </div>
+            <div className='md:hidden'>
+                   <button onClick={hideNavHandler}>{hideNav ? <MdClose/> :<MdOutlineMenu />}</button>
+            </div>
+           
+         
+        </nav>
+       
+     
+    </div>
+     {hideNav && (
+            <div className='flex flex-col items-center basis-full p-2 space-y-3'>
+                <div className='flex flex-col flex-wrap space-y-1 text-lg' id='navMenu'>
+                     <NavLinks />
+                </div>
+                <div>
+                 {!isLoggedIn ?   <Link to='./log-in'> <button>Sign in / Create Account </button> </Link> : <button onClick={logOutHandler}> Log Out </button>}
+                </div>
+                <div>
+                     <Link to="/sign-up/venue-manager">
+                    <p className='font-bold text-center text-sm'>Are you a venue manager?</p>
+                    <p className='italic text-center'>Click here</p>
+                </Link>
+                </div>
+               
+            </div>
+               
+            
+        )}
+</>
+  )
+}
 
-    <div>
-        <div className='flex justify-between items-center bg-background-color-navigation p-2'>
-            <p className='text-2xl'>BOOKIPEDIA.com</p>
-            <button onClick={hideNavHandler} className='text-2xl cursor-pointer'>☰</button>
-        </div>
-        {hideNav && 
-    <div className='bg-black p-5 fixed w-full h-full z-50'>
-       {!isLoggedIn ?  <Link to='./log-in'> <p className='bg-red-200 text-center cursor-pointer text-lg' onClick={hideNavHandler}> Sign in / Create Account </p> </Link> : <p className='bg-red-200 text-center cursor-pointer text-lg' onClick={logOutHandler}> Log Out </p>} 
-        <ul className='flex flex-col items-start mt-5 gap-5 p-6' onClick={hideNavHandler}>
-            <li className='w-full '> <Link to='/'>
-                <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcHome className='text-xl'/>
-                    <p className='text-xl'>  Home </p>
-                </div>
-              </Link></li>
-            <li className='w-full '><Link to='/venues'>
-            <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcOrganization  className='text-xl'/>
-                    <p className='text-xl'>  Venues </p>
-                </div>
-                </Link></li>
-            <li className='w-full '>
-                {isLoggedIn ? <Link to='/bookings'>
-            <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcCalendar className='text-xl'/>
-                    <p className='text-xl'>  My Bookings </p>
-                </div></Link> : <Link to='./log-in'>
-            <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcCalendar className='text-xl'/>
-                    <p className='text-xl'>  My Bookings </p>
-                </div></Link>}</li>
-            <li className='w-full '><Link to='/about'>
-            <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcAbout className='text-xl'/>
-                    <p className='text-xl'>  About Us </p>
-                </div></Link></li>
-            <li className='w-full '><Link to='/contacts'>
-            <div className='flex items-center rounded-lg bg-white p-1 justify-center'>
-                    <FcAssistant className='text-xl'/>
-                    <p className='text-xl'>  Contacts </p>
-                </div></Link></li>
-        </ul>
+export default Navigation
+
+
+       {/* {hideNav && 
+            <div className='bg-black p-5 inset-0 top-16 h-screen z-50 absolute md:h-0 md:bg-none md:static md:flex'>
+    
+  
         {!isLoggedIn && <div className='text-white text-center p-6 m-6 text-sm font-bold' onClick={hideNavHandler}>
             <Link to="/sign-up/venue-manager">
             <p>Are you a venue manager?</p>
@@ -71,17 +111,9 @@ function Navigation() {
             </Link>
         </div>}
        
-    </div>
+            </div>
     
-        }
-    </div>
-  )
-}
-
-export default Navigation
-
-
-
+            } */}
 
 
 

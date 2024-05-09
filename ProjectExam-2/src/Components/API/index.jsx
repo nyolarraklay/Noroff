@@ -6,6 +6,7 @@ import Venue from '../VenueCard';
 
 function ShortListVenue() {
     const { venues, fetchVenues } = useStore();
+    
 
     const popularDestinations = venues.slice(0, 5).sort((a, b) => b.rating - a.rating);
     useEffect(() => {

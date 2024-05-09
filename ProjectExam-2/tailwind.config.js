@@ -6,15 +6,14 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
+      backgroundImage: theme => ({
         'background-home': "url(/src/assets/beach-bg.avif)",
         'background-home-lg': "url(/src/assets/beachcover.webp)",
         'background-color-navigation': "linear-gradient(to top, #48c6ef 0%, #6f86d6 100%)",
         'background-destinations': "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
         'background-button': "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        'background-venue': "radial-gradient(73% 147%, #EADFDF 59%, #ECE2DF 100%), radial-gradient(91% 146%, rgba(255,255,255,0.50) 47%, rgba(0,0,0,0.50) 100%);",
-   
-      }
+        'background-venue': "linear-gradient(to top, #48c6ef 0%, #6f86d6 100%)",
+      }),
     },
   },
   plugins: [],
