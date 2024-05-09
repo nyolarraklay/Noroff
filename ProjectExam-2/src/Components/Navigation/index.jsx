@@ -5,32 +5,39 @@ import { useNavigate } from 'react-router-dom';
 import { MdClose, MdOutlineMenu } from "react-icons/md";
 
 
-function NavLinks()  {
-    const { isLoggedIn } = useStore()
+function NavLinks({ hideNav})  {
+    const { isLoggedIn, logOut } = useStore()
+    const navigate = useNavigate()
+    const logOutHandler = () => {
+        logOut()
+        navigate('/')
+        hideNav()
+    }
+
     return (
         < >  
-           <NavLink to='/'>
+           <NavLink to='/' onClick={hideNav}>
                 <p>  Home </p>
             </NavLink>
-            <NavLink to='/venues'>
+            <NavLink to='/venues' onClick={hideNav}>
                 <p>  Venues </p>
             </NavLink>
           
                 {isLoggedIn ? 
-            <NavLink to='/bookings'>
+            <NavLink to='/bookings' onClick={hideNav}>
                 <p>  Bookings </p>
             </NavLink> : 
-            <NavLink to='./log-in'>
+            <NavLink to='./log-in' onClick={hideNav}>
                 <p>  Bookings </p>
             </NavLink>}
-           <NavLink to='/about'>
+           <NavLink to='/about' onClick={hideNav}>
                <p>  About  </p>
                 
             </NavLink>
-            <NavLink to='/contacts'>
+            <NavLink to='/contacts' onClick={hideNav}>
                 <p>  Contacts </p>
             </NavLink>
-            {!isLoggedIn ? <><NavLink to='/log-in'><p>Sign in</p></NavLink> <NavLink to='/sign-up'><p> Create Account </p></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
+            {!isLoggedIn ? <><NavLink to='/log-in' onClick={hideNav}><p>Sign in</p></NavLink> <NavLink to='/sign-up' onClick={hideNav}><p> Create Account </p></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
         
         </ >
     )
@@ -38,22 +45,13 @@ function NavLinks()  {
 
 
 function Navigation() {
-    const { isLoggedIn, logOut } = useStore()
+    
     const [hideNav, setHideNav] = useState(false)
     const hideNavHandler = () => {
         setHideNav(!hideNav)
     }
-    const navigate = useNavigate()
-
-
     
 
-
-    const logOutHandler = () => {
-        logOut()
-        navigate('/')
-        hideNavHandler()
-    }
 
   return (
 <>
@@ -61,7 +59,7 @@ function Navigation() {
         <nav className='flex justify-end' >
             <div className='hidden md:flex md:mx-2 md:space-x-2  '>
                 <div className='flex items-center space-x-1 md:space-x-2' id='navMenu'>
-                     <NavLinks />
+                     <NavLinks  />
                 </div>   
             </div>
             <div className='md:hidden'>
@@ -76,11 +74,11 @@ function Navigation() {
      {hideNav && (
             <div className='flex flex-col items-center basis-full p-2 space-y-3 md:hidden'>
                 <div className='flex flex-col flex-wrap space-y-1 text-lg' id='navMenu'>
-                     <NavLinks />
+                     <NavLinks hideNav={hideNavHandler} />
                 </div>
               
                 <div>
-                     <Link to="/sign-up/venue-manager">
+                     <Link to="/sign-up/venue-manager" onClick={hideNavHandler}>
                     <p className='font-bold text-center text-sm'>Are you a venue manager?</p>
                     <p className='italic text-center'>Click here</p>
                 </Link>
@@ -95,27 +93,4 @@ function Navigation() {
 }
 
 export default Navigation
-
-
-       {/* {hideNav && 
-            <div className='bg-black p-5 inset-0 top-16 h-screen z-50 absolute md:h-0 md:bg-none md:static md:flex'>
-    
-  
-        {!isLoggedIn && <div className='text-white text-center p-6 m-6 text-sm font-bold' onClick={hideNavHandler}>
-            <Link to="/sign-up/venue-manager">
-            <p>Are you a venue manager?</p>
-            <p>Click here</p>
-            </Link>
-        </div>}
-       
-            </div>
-    
-            } */}
-
-
-
-
-
-
-
 
