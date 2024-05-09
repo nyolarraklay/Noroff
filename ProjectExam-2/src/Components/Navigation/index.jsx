@@ -30,6 +30,7 @@ function NavLinks()  {
             <NavLink to='/contacts'>
                 <p>  Contacts </p>
             </NavLink>
+            {!isLoggedIn ? <><NavLink to='/log-in'><p>Sign in</p></NavLink> <NavLink to='/sign-up'><button> Create Account </button></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
         
         </ >
     )
@@ -61,9 +62,7 @@ function Navigation() {
             <div className='hidden md:flex md:mx-2 md:space-x-2  '>
                 <div className='flex items-center space-x-1 md:space-x-2' id='navMenu'>
                      <NavLinks />
-                </div>
-               
-                {!isLoggedIn ?   <div className='flex items-center space-x-2'><Link to='/log-in'><p>Sign in</p></Link> <Link to='./sign-up'><button> Create Account </button></Link> </div>   : <button  onClick={logOutHandler}> Log Out </button>}    
+                </div>   
             </div>
             <div className='md:hidden'>
                    <button onClick={hideNavHandler}>{hideNav ? <MdClose/> :<MdOutlineMenu />}</button>
@@ -79,9 +78,7 @@ function Navigation() {
                 <div className='flex flex-col flex-wrap space-y-1 text-lg' id='navMenu'>
                      <NavLinks />
                 </div>
-                <div>
-                 {!isLoggedIn ?   <Link to='./log-in'> <button>Sign in / Create Account </button> </Link> : <button onClick={logOutHandler}> Log Out </button>}
-                </div>
+              
                 <div>
                      <Link to="/sign-up/venue-manager">
                     <p className='font-bold text-center text-sm'>Are you a venue manager?</p>
