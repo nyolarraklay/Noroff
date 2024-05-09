@@ -74,7 +74,7 @@ function Navigation() {
      
     </div>
      {hideNav && (
-            <div className='flex flex-col items-center basis-full p-2 space-y-3'>
+            <div className='flex flex-col items-center basis-full p-2 space-y-3 md:hidden'>
                 <div className='flex flex-col flex-wrap space-y-1 text-lg' id='navMenu'>
                      <NavLinks />
                 </div>
