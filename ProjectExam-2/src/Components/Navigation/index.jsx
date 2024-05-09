@@ -30,7 +30,7 @@ function NavLinks()  {
             <NavLink to='/contacts'>
                 <p>  Contacts </p>
             </NavLink>
-            {!isLoggedIn ? <><NavLink to='/log-in'><p>Sign in</p></NavLink> <NavLink to='/sign-up'><button> Create Account </button></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
+            {!isLoggedIn ? <><NavLink to='/log-in'><p>Sign in</p></NavLink> <NavLink to='/sign-up'><p> Create Account </p></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
         
         </ >
     )
@@ -65,7 +65,7 @@ function Navigation() {
                 </div>   
             </div>
             <div className='md:hidden'>
-                   <button onClick={hideNavHandler}>{hideNav ? <MdClose/> :<MdOutlineMenu />}</button>
+                   <button onClick={hideNavHandler} aria-label={hideNav ? "Close Navigation" : "Open Navigation"}>{hideNav ? <MdClose/> :<MdOutlineMenu />}</button>
             </div>
            
          
