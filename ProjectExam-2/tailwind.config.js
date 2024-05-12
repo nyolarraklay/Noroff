@@ -15,6 +15,13 @@ export default {
         'background-venue': "linear-gradient(to top, #48c6ef 0%, #6f86d6 100%)",
       }),
     },
+    screens: {
+      'xs': '475px',  
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+    },
   },
   plugins: [],
 }

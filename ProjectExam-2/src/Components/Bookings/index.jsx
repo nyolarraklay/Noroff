@@ -170,22 +170,29 @@ async function handleSearch(query) {
     <div>
     <div className='relative p-8'>
       <Container url={url}> 
-      <div className='bg-black flex'> 
-  <div>
-    { user.bio && <h3>{user.bio}</h3>}
-
- <div>
-        <div className='flex-shrink-0 size,20 rounded-sm overflow-hidden' >
+         
+      <div className='flex flex-col mx-auto space-y-8'> 
+        <div className='text-white text-4xl sm:text-6xl italic text-center'>
+          { user.bio && <h3>{user.bio}</h3>}
+        </div>
+        <div className='flex'>
+           <div className='hidden xs:flex flex-shrink-0 size-32 sm:size-40 rounded-full overflow-hidden' >
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
-       
-      </div>
-      </div>
-        <div className="ml-5 ">
-          <p className="text-white font-semibold">{user.name}</p>
-          <p className="text-white text-sm">{user.email}</p>
-          <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/editProfile/${loggedIn}`}>Edit Profile</Link> </button>
+        <div className='relative'>
+            <div className=" ml-2 bg-gray-500 rounded-xl relative opacity-50 w-44 sm:w-52 h-20">
+         </div>
+          <div className='absolute title top-2 left-5'>
+          <p className="text-white font-semibold text-xl sm:text-3xl uppercase">{user.name}</p>
+          <p className="text-white italic text-md sm:text-xl">{user.email}</p>
+          <button className="text-xs mt-0 xs:mt-10"><Link to={`/editProfile/${loggedIn}`}>Edit Profile</Link> </button>
+          </div> 
+          
         </div>
+      
+        
+        </div>
+       
       </div>
     
       </Container>
