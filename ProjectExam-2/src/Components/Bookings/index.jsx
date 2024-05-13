@@ -125,6 +125,8 @@ const bookingsByVenue = createdVenue.map((venue) => {
 
   
   return (
+    <div className="flex items-center">
+   <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
     <div key={venue.id} className='p-2'>
       <h2 className='font-bold text-lg'> Venue: {venue.name}</h2>
       <ol className='list-decimal pl-5'>
@@ -140,6 +142,9 @@ const bookingsByVenue = createdVenue.map((venue) => {
         })}
       </ol>
     </div>
+  </div>
+    </div>
+ 
   );
 });
 
@@ -161,7 +166,7 @@ if (avatarAlt) fullAvatar.push(avatarAlt);
 async function handleSearch(query) {
   const result = await searchProfiles(query);
   if (result) {
-    console.log("Search result:", result);
+   
     setSearchResults(result); 
   } else {
     console.log("No result");
@@ -221,19 +226,29 @@ async function handleSearch(query) {
         </ul>
       </div>
       <div> 
-        {showVenues && <div>
+        {showVenues &&
+            <div className="flex items-center">
+            <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+        <div>
           <h2>All Venues</h2>
           <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/addVenue/${loggedIn}`}>Add Venue</Link> </button>
           <div>
             {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
+        </div>
+        </div>
         </div>}
+
+
         {showBookings && <div className='mx-2 my-4' >
           <h1 className='font-bold text-2xl text-center'>Bookings by Venue</h1>
          {bookingsByVenue}
          
         </div>}
-        {showUsers && <div>
+        {showUsers &&
+            <div className="flex items-center">
+            <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+        <div>
           <h2>All Users</h2>
           <div className="flex items-center justify-between p-2 bg-white rounded-lg mt-2 w-full">
         <label htmlFor="searchInput" className="sr-only">Search for a profile...</label>
@@ -261,7 +276,10 @@ async function handleSearch(query) {
                     </Container>
                   ))}
           </div>
-        </div>}
+        </div>
+        </div>
+        </div>
+        }
       </div>
     </div>}
     
