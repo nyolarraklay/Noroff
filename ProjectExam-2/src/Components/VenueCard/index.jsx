@@ -28,8 +28,8 @@ function Venues({ venue, isBooked, venueManager }) {
         </div>
       
        
-        <div className="grid grid-rows-3 col-span-2">
-          <div className="row-span-2 space-y-2" >
+        <div className="grid">
+          <div className="row-span-2 space-y-5" >
             <p className="location-heading">{location.city}, {location.country}</p>
             <div className="flex">
               <p className="bg-background-button px-2 text-white me-2">{venue.rating}</p>
@@ -40,12 +40,11 @@ function Venues({ venue, isBooked, venueManager }) {
               <p className="font-bold text-lg font-sans">{venue.name}</p>
               <p>{venue.price}<span className="text-xs">/night</span></p>
             </div>
-          </div>
-         
-          {venueManager ? (<button><Link to={`/edit-venue/${venue.id}/${venueManager}`}>Edit</Link></button> ) : (<div className="content-end">
+            {venueManager ? (<button><Link to={`/edit-venue/${venue.id}/${venueManager}`}>Edit</Link></button> ) : (<div className="content-end">
           {!isBooked ? <button ><Link to={`/venue/${venue.id}`}>Book Now</Link></button> : <button className="text-xs"><Link to={`/book-edit/${venue.id}/${isBooked}`}>Edit Booking</Link></button>} </div>)
           }
-     
+          </div>
+         
         </div>
     </div>
     

@@ -35,7 +35,7 @@ const useStore = create((set) => ({
         const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}/?_bookings=true`);
         const json = await response.json();
         const data = json.data;
-        set((state)=>({...state, createdVenues: [...state.createdVenues, data]}));
+        set((state)=>({...state, createdVenues: [...state.createdVenues, data], venue: data}));
        
       } catch (error) {
         console.log(error);

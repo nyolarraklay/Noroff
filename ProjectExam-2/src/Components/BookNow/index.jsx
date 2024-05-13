@@ -3,6 +3,7 @@ import { DatePicker } from 'antd';
 import { useState, useEffect} from 'react';
 import useStore from '../Store';
 import { useParams } from "react-router-dom";
+import moment from 'moment';
 
 function BookNow() {
     const [checkInDate, setCheckInDate] = useState(null);
@@ -28,9 +29,19 @@ function BookNow() {
        
       };
 
+      const venueWithBookings = venue && venue.bookings ? venue.bookings : [];
+
+      const bookedDates = venueWithBookings.map((booking) => {
+
+        const startDate = moment(booking.dateFrom).format("YYYY-MM-DD");
+        const endDate = moment(booking.dateTo).format("YYYY-MM-DD");
+        return {
+          title: "Booked",
+          start: startDate,
+          end: endDate,
+        };
+      }) 
    
-
-
 
   useEffect(() => {
     fetchVenue(venueId);
@@ -43,8 +54,6 @@ function BookNow() {
     const { name, price, id, maxGuests } = venue;
 
     const venueID = id;
-
-    const bookers = venue.bookings;
 
     let booker;
 
@@ -69,17 +78,18 @@ function BookNow() {
             
         }
       }
-
       function deleteBookings() {
         deleteBooking(bookerID);
       }
 
+
   return (
-    <div className="max-w-lg mx-auto mt-8 p-10">
-    <h2 className="text-2xl font-bold mb-4">Venue Booking Form</h2>
-    <h3>{name}</h3>
-    <p>{price}</p>
-    <p>{maxGuests}</p>
+    <div className="flex items-center">
+       <div className="flex flex-col bg-background-venue mx-auto p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+    <h2 className="text-4xl font-bold mb-4 uppercase">Venue Booking Form</h2>
+    <h3 className='text-2xl uppercase'>{name}</h3>
+    <p>{price} / night</p>
+    <p>Max Guests: {maxGuests}</p>
     <form className="space-y-4" >
         <div className="grid gap-y-2 gap-x-2">
             {/* Guests */}
@@ -89,9 +99,26 @@ function BookNow() {
             </div>
            
             <div className="col-span-2 my-10">
-                <div className="flex justify-between space-x-4">
-                    <DatePicker onChange={handleCheckInDateChange} placeholder='Check in' format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
-                    <DatePicker onChange={handleCheckOutDateChange} placeholder='Check Out' format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black' />
+            <h2 className='text-md uppercase'>Please select your date of visit</h2>
+                <div className="flex flex-col xs:flex-row justify-between">
+                    <DatePicker onChange={handleCheckInDateChange} placeholder='Check In'  format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black'
+                    disabledDate={(current) => {
+                    const date = current.format("YYYY-MM-DD");
+                    return current && current < new Date() || bookedDates.some((booking) => {
+                    return date >= booking.start && date <= booking.end;
+                    });
+                    }}
+                    />
+              
+                    <DatePicker onChange={handleCheckOutDateChange} placeholder='Check Out' format={"DD-MMM-YYYY"} popupClassName='text-xs w-72' className='text-xs font-bold text-black'
+                    disabledDate={(current) => {
+                    const date = current.format("YYYY-MM-DD");
+                    return current && current < new Date() || bookedDates.some((booking) => {
+                    return date >= booking.start && date <= booking.end;
+                    }
+                    );
+                    }}
+                    />
                 </div>
             </div>
         </div>
@@ -103,6 +130,8 @@ function BookNow() {
             {isBooked && <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={deleteBookings}>Cancel Booking</button>}
         </div>
 </div>
+    </div>
+    
 
   )
 }

@@ -22,3 +22,6 @@
     @apply bg-background-venue text-white font-bold py-1 px-2 rounded shadow-lg uppercase font-sans text-sm;
   }
 
+.fc-event {
+  @apply bg-background-button text-center;
+}

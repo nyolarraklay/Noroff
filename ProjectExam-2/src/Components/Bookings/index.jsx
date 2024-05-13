@@ -48,6 +48,7 @@ const handleShowBookings = () => {
   setShowUsers(false);
 
   const venueIds = venues.map((venue) => venue.id);
+  
 
   const uniqueVenueIds = new Set(venueIds);
 
@@ -106,8 +107,23 @@ useEffect(() => {
 }, [userName, apiKey]); 
 
 
-const bookingsByVenue = createdVenues.map((venue) => {
-  const bookings = venue.bookings;
+ const userBookings = user.bookings || [];
+
+
+  const bookedVenues = userBookings
+    .filter(venue => venue) 
+    .map(venue => venue.venue);
+
+const createdVenue = createdVenues.length > 0 && createdVenues.map((venue) => {
+  return venue;
+}) || [];
+
+console.log(createdVenue);
+
+const bookingsByVenue = createdVenue.map((venue) => {
+  const bookings = venue.bookings || [];
+
+  
   return (
     <div key={venue.id} className='p-2'>
       <h2 className='font-bold text-lg'> Venue: {venue.name}</h2>
@@ -127,18 +143,6 @@ const bookingsByVenue = createdVenues.map((venue) => {
   );
 });
 
-
-
-
-
-  
-  const userBookings = user.bookings || [];
-  const bookedVenues = userBookings
-    .filter(venue => venue) 
-    .map(venue => venue.venue);
-
-
-    const currentDate = new Date();
 
 
 const banner = user.banner
@@ -167,7 +171,7 @@ async function handleSearch(query) {
 
 
   return (
-    <div>
+    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
     <div className='relative p-8'>
       <Container url={url}> 
          
@@ -207,8 +211,8 @@ async function handleSearch(query) {
        <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
       </div>
     </div>
-     : <div>
-      <h2> You are a venue manager</h2>
+     : <div className='space-y-5'>
+      <h2 className='italic text-2xl text-center'> You are a venue manager</h2>
       <div>
         <ul className='flex justify-evenly'>
           <li><button className='px-1 py-2 bg-white rounded-md' onClick={handleShowVenues}>All Venues</button></li>
