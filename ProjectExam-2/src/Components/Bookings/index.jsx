@@ -180,7 +180,7 @@ async function handleSearch(query) {
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
         <div className='relative'>
-            <div className=" ml-2 bg-gray-500 rounded-xl relative opacity-50 w-44 sm:w-52 h-20">
+            <div className=" ml-2 bg-gray-500 rounded-xl relative opacity-50 w-44 sm:w-60 h-20">
          </div>
           <div className='absolute title top-2 left-5'>
           <p className="text-white font-semibold text-xl sm:text-3xl uppercase">{user.name}</p>
