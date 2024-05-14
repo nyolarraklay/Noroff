@@ -2,6 +2,7 @@ import React from 'react'
 import useStore from '../Store';
 import { useEffect } from 'react';
 import Venue from '../VenueCard';
+import { Link } from 'react-router-dom'
 
 
 function ShortListVenue() {
@@ -14,10 +15,17 @@ function ShortListVenue() {
     }, [fetchVenues]);
 
   return (
-    <div className='p-10 space-y-6'>
-      {popularDestinations.map((venue) => <Venue venue={venue} key={venue.id}  />)}
-       
+    <div className='body-content'>
+      <div className='divStyle-content'>
+          <div className='p-10 space-y-6'>
+            {popularDestinations.map((venue) => <Venue venue={venue} key={venue.id}  />)}
+          </div>
+          <div className="flex justify-center">
+          <button ><Link to={'/venues'}> See all </Link> </button>
+        </div>
+      </div>
     </div>
+   
   )
 }
 

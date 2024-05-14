@@ -125,8 +125,8 @@ const bookingsByVenue = createdVenue.map((venue) => {
 
   
   return (
-    <div className="flex items-center">
-   <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+    <div className="body-content">
+   <div className="divStyle-content m-2 space-y-5">
     <div key={venue.id} className='p-2'>
       <h2 className='font-bold text-lg'> Venue: {venue.name}</h2>
       <ol className='list-decimal pl-5'>
@@ -182,7 +182,7 @@ async function handleSearch(query) {
          
       <div className='flex flex-col mx-auto space-y-8'> 
         <div className='text-white text-4xl sm:text-6xl italic text-center'>
-          { user.bio && <h3>{user.bio}</h3>}
+          { user.bio && <h1>{user.bio}</h1>}
         </div>
         <div className='flex'>
            <div className='hidden xs:flex flex-shrink-0 size-32 sm:size-40 rounded-full overflow-hidden' >
@@ -208,14 +208,15 @@ async function handleSearch(query) {
      
     </div>
     {!user.venueManager  ? 
-
-    <div>
+      <div className='body-content'>
+  <div className='divStyle-content'>
       <h2 className='text-center text-2xl font-bold'>My Bookings</h2>
       <div className='p-10 flex flex-col gap-6'>
       {bookedVenues.map((venue) =>
        <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
       </div>
     </div>
+      </div>
      : <div className='space-y-5'>
       <h2 className='italic text-2xl text-center'> You are a venue manager</h2>
       <div>
@@ -227,12 +228,12 @@ async function handleSearch(query) {
       </div>
       <div> 
         {showVenues &&
-            <div className="flex items-center">
-            <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
-        <div>
-          <h2>All Venues</h2>
+            <div className="body-content">
+            <div className="divStyle-content">
+        <div className='space-y-5'>
+          <h2 className='heading-venueManager'>All Venues</h2>
           <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/addVenue/${loggedIn}`}>Add Venue</Link> </button>
-          <div>
+          <div className='space-y-5'>
             {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
         </div>
@@ -241,32 +242,33 @@ async function handleSearch(query) {
 
 
         {showBookings && <div className='mx-2 my-4' >
-          <h1 className='font-bold text-2xl text-center'>Bookings by Venue</h1>
+          <h1 className='heading-venueManager'>Bookings by Venue</h1>
          {bookingsByVenue}
          
         </div>}
         {showUsers &&
-            <div className="flex items-center">
-            <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+            <div className="body-content">
+            <div className="divStyle-content">
         <div>
-          <h2>All Users</h2>
+          <h2 className='heading-venueManager'>All Users</h2>
           <div className="flex items-center justify-between p-2 bg-white rounded-lg mt-2 w-full">
-        <label htmlFor="searchInput" className="sr-only">Search for a profile...</label>
+        <label  htmlFor="searchInput" className="sr-only text-transparent">search for a profile</label>
         <input 
+        aria-label='search for a profile'
           type="search" 
           id="searchInput"
-          className="w-full ml-2 bg-transparent focus:outline-none text-black font-bold"
+          className=" bg-transparent focus:outline-none text-black font-bold"
           placeholder="Search for a user..."
           onChange={(e) => handleSearch(e.target.value)} // Call handleSearch on input change
         />
       </div>
 
-          <div>
+          <div className='body-content'>
           {searchResults.map((user, index) => (
                     <Container key={index}>
-                      <div className='bg-black flex'>
+                      <div className=' flex items-center p-2'>
                         <div>
-                          <img className="h-20 w-20 object-cover rounded-full" src={user.avatar.url} alt={user.avatar.alt}/>
+                          <img className="h-20 w-20 object-cover rounded-lg" src={user.avatar.url} alt={user.avatar.alt}/>
                         </div>
                         <div className="ml-5 ">
                           <p className="text-white font-semibold">{user.name}</p>

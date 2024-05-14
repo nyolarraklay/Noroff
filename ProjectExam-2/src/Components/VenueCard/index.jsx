@@ -21,15 +21,16 @@ function Venues({ venue, isBooked, venueManager }) {
 
 
   return (
-    
-    <div className="bg-background-venue p-1 rounded-md border border-gray-200 shadow-md  grid xs:grid-cols-6 grid-rows-1 gap-4 ">
-        <div className="col-span-2">
+   
+     
+        <div className="bg-background-venue p-1 rounded-md border border-gray-200 shadow-md  grid xs:grid-cols-6 grid-rows-1 gap-4 ">
+        <div className="col-span-1 xs:col-span-2">
     {image}
         </div>
       
        
-        <div className="grid">
-          <div className="row-span-2 space-y-5" >
+        <div className=" xs:col-span-3">
+          <div className=" space-y-5" >
             <p className="location-heading">{location.city}, {location.country}</p>
             <div className="flex">
               <p className="bg-background-button px-2 text-white me-2">{venue.rating}</p>
@@ -47,6 +48,9 @@ function Venues({ venue, isBooked, venueManager }) {
          
         </div>
     </div>
+     
+    
+    
     
   )
 }

@@ -70,8 +70,8 @@ const locationName = locationNameParts.join(", ");
 
 
   return (
-    <div className="flex items-center">
-    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+    <div className="body-content">
+    <div className="divStyle-content m-2 space-y-5">
       <div className="flex flex-col items-center xs:flex-row bg-background-color-navigation text-black">
         <div>
         {image}
@@ -121,8 +121,11 @@ const locationName = locationNameParts.join(", ");
             {images}
           </div>
         </div>
-        <h2 className="font-bold text-xl text-black uppercase">Check Availability</h2>
-        <Calendar isBooked={bookingDates} />
+        <div>
+          <h2 className="font-bold text-xl text-black uppercase">Check Availability</h2>
+          <Calendar isBooked={bookingDates} />
+        </div>
+   
       </div>
       <button className="bg-blue-500 text-white rounded-md p-2 my-10"> 
       {isLoggedIn ? <Link to={`/book-now/${id}`}> Book Now</Link> : <Link to={`/log-in`}> Book Now</Link>} </button>

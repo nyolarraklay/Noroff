@@ -9,7 +9,7 @@ function BookingCalendar({ isBooked }) {
     const { token } = theme.useToken();
 
     const wrapperStyle = {
-        width: 700,
+        width: 'auto',
         border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
     };

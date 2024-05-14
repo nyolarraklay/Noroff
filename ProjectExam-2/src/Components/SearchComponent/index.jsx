@@ -35,10 +35,10 @@ function Search() {
 
   return (
     <div className="pt-20 px-8 bg-background-home bg-cover bg-center bg-no-repeat w-full h-72 sm:flex sm:flex-col sm:items-center sm:justify-center lg:relative lg:h-56 lg:bg-background-home-lg lg:bg-center ">
-        <h1 className="text-white text-lg mb-3 text-center sm:text-2xl font-bold sm:mb-10 lg:relative lg:z-10 lg:mt-[-120px] font-serif">Your Budget-Friendly Vacation Solution!</h1>
-        <div className="bg-background-color-navigation w-full p-4 flex flex-col space-y-4 sm:w-1/2 xl:w-1/3 lg:absolute lg:top-32  ">
+        <h1 className="text-white text-lg mb-3 text-center sm:text-2xl font-bold font-serif">Your Budget-Friendly Vacation Solution!</h1>
+        <div className="bg-background-color-navigation  p-4 flex flex-col space-y-4 max-w-2xl ">
      
-            <div className="flex items-center justify-between p-2 bg-white rounded-lg mt-2 w-full">
+            <div className="flex items-center justify-between p-2 bg-white rounded-lg mt-2">
               <LuSearch />
             <label htmlFor="searchInput" className="sr-only">Search for a venue...</label>
                <input type="search" 
@@ -51,7 +51,7 @@ function Search() {
             </div>
          
 
-            <button onClick={handleChange} className='text-white bg-blue-500 rounded-md p-2' >Search</button>
+            <button onClick={handleChange} >Search</button>
              
            
         </div>
