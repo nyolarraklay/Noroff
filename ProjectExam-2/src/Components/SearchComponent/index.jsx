@@ -1,38 +1,35 @@
 import React, { useState } from 'react'
 import { LuSearch } from "react-icons/lu";
 import useStore from "../Store";
-import SearchResults from "../Search";
-import {  useNavigate } from 'react-router-dom';
+import Venue from "../VenueCard";
+import { set } from 'react-hook-form';
 
 
 
 
-function Search() {
-  const { venues } = useStore();
-  const [searchText, setSearchText] = useState('');
+
+function Search({onStateChange}) {
+  const { searchVenues } = useStore();
   const [searchResults, setSearchResults] = useState([]);
 
-  const navigate = useNavigate();
-
-      const handleSearchChange = (e) => {
-        setSearchText(e.target.value);
-      };
-
-    const fetchSearchVenues = (searchText) => {
+ 
+    async function handleSearch(query) {
+    
       
-      const filteredVenues = venues.filter((venue) => venue && venue.name && venue.name.toLowerCase().includes(searchText.toLowerCase()))
-      setSearchResults(filteredVenues);
-      navigate('/search-results', { state: { results: filteredVenues } });
-    };
-
-    const handleChange = () => {
-      if (searchText === '' || searchText === null) {
-        return;
+      const result = await searchVenues(query);
+      if (result) {
+       
+        setSearchResults(result); 
+        onStateChange(searchResults);
+      } else {
+        setSearchResults([]); 
+        onStateChange([]);
+        alert('No results found');
       }
-      fetchSearchVenues(searchText);
-    };
-  
-
+    }
+    
+    
+    
   return (
     <div className="pt-20 px-8 bg-background-home bg-cover bg-center bg-no-repeat w-full h-72 sm:flex sm:flex-col sm:items-center sm:justify-center lg:relative lg:h-56 lg:bg-background-home-lg lg:bg-center ">
         <h1 className="text-white text-lg mb-3 text-center sm:text-2xl font-bold font-serif">Your Budget-Friendly Vacation Solution!</h1>
@@ -45,17 +42,13 @@ function Search() {
                   id="searchInput"
                 className="w-full ml-2 bg-transparent focus:outline-none text-black font-bold"
                 placeholder="Search for a venue..."
-                value={searchText}
-                onChange={handleSearchChange}
+                onChange ={(e) => handleSearch(e.target.value)}
                 />
-            </div>
-         
 
-            <button onClick={handleChange} >Search</button>
-             
+            </div>
            
         </div>
-
+        
     </div>
   )
 }

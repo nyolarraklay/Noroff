@@ -14,7 +14,6 @@ import SignUp from '../Signup';
 import VenueManagerSignUp from '../VenueManagerSignUp';
 import MyProfile from '../Profile';
 import CreateVenueForm from '../CreateVenue';
-import EditVenueForm from '../EditVenue';
 
 
 

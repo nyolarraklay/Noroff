@@ -298,7 +298,6 @@ const useStore = create((set) => ({
               });
               const json = await response.json();
               const data = json.data;
-              console.log(data);
               return data;
             } catch (error) {
               console.error("Error searching venues:", error);
