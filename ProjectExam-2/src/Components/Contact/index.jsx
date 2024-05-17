@@ -28,6 +28,7 @@ function Contacts() {
   });
 
   function onSubmit(data) {
+    alert("Thank you for your message!");
     console.log(data);
   }
 

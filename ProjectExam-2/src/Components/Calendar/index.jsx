@@ -40,12 +40,7 @@ function BookingCalendar({ isBooked }) {
 
                 }
                 }
-
-                
-           
-             
             />
-            
         </div>
     );
 }

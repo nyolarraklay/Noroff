@@ -2,7 +2,7 @@ import React from 'react'
 import { DatePicker } from 'antd';
 import { useState, useEffect} from 'react';
 import useStore from '../Store';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import moment from 'moment';
 
 function BookNow() {
@@ -10,6 +10,9 @@ function BookNow() {
     const [checkOutDate, setCheckOutDate] = useState(null);
     const [guests, setGuests] = useState(null);
     const { fetchVenue, venue, bookNow, editBooking, deleteBooking } = useStore();
+    const [isLoading, setIsLoading] = useState(true);
+
+    const navigate = useNavigate();
 
 
     let { venueId, isBooked } = useParams();
@@ -44,7 +47,13 @@ function BookNow() {
    
 
   useEffect(() => {
-    fetchVenue(venueId);
+    const loadVenue = async () => {
+      setIsLoading(true); 
+      await fetchVenue(venueId);
+      setIsLoading(false);
+    }
+    loadVenue();
+        
   }, [fetchVenue, venueId]);
 
     if (!venue) {
@@ -75,15 +84,24 @@ function BookNow() {
             return;
           }
             bookNow(checkInDate, checkOutDate, guests, venueID);
+            navigate(`/`);
             
         }
       }
       function deleteBookings() {
         deleteBooking(bookerID);
+        navigate(`/`);
       }
 
 
   return (
+
+    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg border border-white m-2 space-y-5">
+    {isLoading ? (
+        <div className="text-center">Loading...</div>
+    ) : (
+        <>
+
     <div className="flex items-center">
        <div className="flex flex-col bg-background-venue mx-auto p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
     <h2 className="text-4xl font-bold mb-4 uppercase">Venue Booking Form</h2>
@@ -130,6 +148,9 @@ function BookNow() {
             {isBooked && <button className="bg-red-500 text-white px-4 py-2 rounded-md" onClick={deleteBookings}>Cancel Booking</button>}
         </div>
 </div>
+    </div>
+    </>
+    )}
     </div>
     
 

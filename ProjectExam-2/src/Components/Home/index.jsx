@@ -13,7 +13,6 @@ const [searchData, setSearchData] = useState('');
     <div>
       <Search onStateChange={setSearchData}/>
       <Destinations searchResults={searchData} />
-     
     </div>
   )
 }

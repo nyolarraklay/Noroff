@@ -16,6 +16,7 @@ const schema = yup.object({
 function LogIn() {
     const [logInUser, setLogInUser] = useState(false)
     const { logIn, apiKey } = useStore();
+    const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
@@ -25,19 +26,17 @@ function LogIn() {
    
              const onSubmit = async(data) => {
                 try {
-                 
                 const user = await logIn(data);
                 setLogInUser(true);
                 setTimeout(() => {
                 navigate('/bookings')},1000);
                 apiKey(user.accessToken);
-
                 }
-                
                 catch (error) {
                     console.log("Login failed:", error);
+                } finally {
+                    setLoading(false);
                 }
-                
               }
 
   return (
@@ -62,7 +61,9 @@ function LogIn() {
             </div>
         </div>
         <div className="flex justify-center">
-            <button type="submit" className="bg-black text-white px-4 py-2 rounded-md">Log In</button>
+            <button type="submit" className="bg-black text-white px-4 py-2 rounded-md" disabled={loading}>
+                            {loading ? 'Logging in...' : 'Log In'}
+            </button>
         </div>
     </form>
     <p className='text-center text-sm mt-6 font-bold'><Link to="/sign-up">Create account</Link></p>

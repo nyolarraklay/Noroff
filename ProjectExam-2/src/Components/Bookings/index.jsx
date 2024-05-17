@@ -33,6 +33,7 @@ const [showUsers, setShowUsers] = useState(false);
 const [searchResults, setSearchResults] = useState([]);
 const [isVenueManager, setIsVenueManager] = useState(false);
 const [venues, setVenues] = useState([]);
+const [isLoading, setIsLoading] = useState(true);
 
 
 const handleShowVenues = () => {
@@ -72,6 +73,7 @@ const handleShowUsers = () => {
 
 
 useEffect(() => {
+
   async function fetchData() {
       try {
           // Fetch user data
@@ -100,7 +102,10 @@ useEffect(() => {
       } catch (error) {
           console.error('Error fetching data:', error);
           // Handle error (e.g., show error message to the user)
+      } finally {
+          setIsLoading(false);
       }
+
   }
 
   fetchData();
@@ -176,6 +181,12 @@ async function handleSearch(query) {
 
 
   return (
+
+    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg border border-white m-2 space-y-5">
+            {isLoading ? (
+                <div className="text-center">Loading...</div>
+            ) : (
+                <>
     <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
     <div className='relative p-8'>
       <Container url={url}> 
@@ -259,7 +270,7 @@ async function handleSearch(query) {
           id="searchInput"
           className=" bg-transparent focus:outline-none text-black font-bold"
           placeholder="Search for a user..."
-          onChange={(e) => handleSearch(e.target.value)} // Call handleSearch on input change
+          onChange={(e) => handleSearch(e.target.value)} 
         />
       </div>
 
@@ -290,6 +301,10 @@ async function handleSearch(query) {
 
 
     </div>
+    </>
+    
+  )}
+        </div>
 
     
 

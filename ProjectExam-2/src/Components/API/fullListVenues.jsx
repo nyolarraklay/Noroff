@@ -8,18 +8,26 @@ function FullListVenues() {
     const [filter, setFilter] = useState({ rating: 'all', price: { min: 0, max: 1000 } });
     const [hasInteracted, setHasInteracted] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleShowFilter = () => {
         setShowFilter(!showFilter);
     }
 
     useEffect(() => {
-        fetchVenues();
+        const loadVenues = async () => {
+            setIsLoading(true);
+            await fetchVenues();
+            setIsLoading(false);
+        };
+
+        loadVenues();
     }, [fetchVenues]);
 
     useEffect(() => {
         if (hasInteracted) {
             filterVenues();
+            
         }
     }, [filter, hasInteracted, venues]);
 
@@ -58,6 +66,11 @@ function FullListVenues() {
     );
 
     return (
+        <div>
+        {isLoading ? (
+            <div className="text-center">Loading...</div>
+        ) : (
+
         <div className='body-content'>
             <div className='divStyle-content'>
                 <h1 className='heading-venueManager'>All Venues</h1>
@@ -117,6 +130,8 @@ function FullListVenues() {
                     )
                 )}
             </div>
+        </div>
+        )}
         </div>
     );
 }
