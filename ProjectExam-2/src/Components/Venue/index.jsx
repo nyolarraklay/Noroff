@@ -1,6 +1,6 @@
 import useStore from "../Store";
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import StarRating from "../StarRating";
 import { FaWifi, FaParking  } from "react-icons/fa";
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -10,11 +10,17 @@ import moment from "moment";
 
 
 function VenueIndividual() {
+  const [isLoading, setIsLoading] = useState(true);
   const { fetchVenue, venue, isLoggedIn } = useStore();
   let { id } = useParams();
 
   useEffect(() => {
-    fetchVenue(id);
+    setIsLoading(true);
+    const loadVenue = async () => {
+      await fetchVenue(id);
+      setIsLoading(false);
+    };
+    loadVenue();
   }, [fetchVenue, id]);
 
   if (!venue) {
@@ -45,12 +51,8 @@ const bookingDates =  bookings && bookings.length > 0 ? bookings.map((booking, i
 }) : [];
 
 
-
-
-
-
-  const {address, city, zip, country, continent} = location || {};
-  const locationNameParts = [];
+const {address, city, zip, country, continent} = location || {};
+const locationNameParts = [];
 if (address) locationNameParts.push(address);
 if (city) locationNameParts.push(city);
 if (zip) locationNameParts.push(zip);
@@ -70,7 +72,12 @@ const locationName = locationNameParts.join(", ");
 
 
   return (
-    <div className="body-content">
+    <div>
+    {isLoading ? (
+        <div className="text-center">Loading...</div>
+    ) : (
+      <>
+       <div className="body-content">
     <div className="divStyle-content m-2 space-y-5">
       <div className="flex flex-col items-center xs:flex-row bg-background-color-navigation text-black">
         <div>
@@ -133,6 +140,10 @@ const locationName = locationNameParts.join(", ");
       
     </div>
     </div>
+      </>
+    )}
+    </div>
+   
   );
 }
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { LuSearch } from "react-icons/lu";
 import useStore from "../Store";
-import Venue from "../VenueCard";
 import { set } from 'react-hook-form';
+
 
 
 
@@ -11,20 +11,28 @@ import { set } from 'react-hook-form';
 function Search({onStateChange}) {
   const { searchVenues } = useStore();
   const [searchResults, setSearchResults] = useState([]);
-
+  const [loading, setLoading] = useState(false);
  
     async function handleSearch(query) {
-    
-      
-      const result = await searchVenues(query);
-      if (result) {
+
+      if (!query) {
        
-        setSearchResults(result); 
-        onStateChange(searchResults);
-      } else {
-        setSearchResults([]); 
+        setSearchResults([]);
         onStateChange([]);
-        alert('No results found');
+        return;
+      }
+      setLoading(true);
+
+      try {
+        const result = await searchVenues(query);
+        setSearchResults(result || []); 
+        onStateChange(result || []);
+      } catch (error) {
+        console.error('Search failed:', error);
+        setSearchResults([]);
+        onStateChange([]);
+      } finally {
+        setLoading(false);
       }
     }
     
@@ -46,6 +54,7 @@ function Search({onStateChange}) {
                 />
 
             </div>
+            {loading && <p className="text-white">Searching...</p>}
            
         </div>
         

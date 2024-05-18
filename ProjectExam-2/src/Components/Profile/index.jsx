@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import useStore from '../Store'
 
 function MyProfile() {
@@ -27,13 +27,23 @@ function MyProfile() {
         setIsLoading(false);
     }
     useEffect(() => {
-        userProfile()
+        const loadProfile = async () => {
+            setIsLoading(true);
+        await userProfile();
+        setIsLoading(false);
+        }
+        loadProfile();  
     }, [userProfile])
 
 
 
   return (
-    <div className="max-w-lg mx-auto mt-8 p-10">
+    <div>
+    {isLoading ? (
+        <div className="text-center">Loading...</div>
+    ) : (
+        <>
+        <div className="max-w-lg mx-auto mt-8 p-10">
     <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
  <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} >
         <div className="grid gap-y-2 gap-x-2">
@@ -79,7 +89,10 @@ function MyProfile() {
             </div>
     </form>
    
-</div>
+        </div>
+        </>
+    )}
+    </div>   
   )
 }
 
