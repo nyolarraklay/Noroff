@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fc-toolbar-title {
+    @apply text-xl !important; 
+  }
+
+  button {
+    @apply bg-background-button text-white font-bold py-2 px-4 rounded shadow-lg uppercase font-sans text-sm;
+  }
+
+  .location-heading {
+    @apply text-2xl font-bold font-mono;
+  }
+
+  body {
+    @apply font-serif;
+  }
+
+  #navMenu a.active {
+    @apply bg-background-venue text-white font-bold py-1 px-2 rounded shadow-lg uppercase font-sans text-sm;
+  }
+
+.fc-event {
+  @apply bg-background-button text-center;
+}
+
+.heading-venueManager {
+  @apply text-black font-bold text-2xl text-center uppercase;
+}
+
+.divStyle-content {
+  @apply flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white ;
+}
+
+.body-content {
+  @apply max-w-2xl mx-auto mt-8 space-y-10;
+}

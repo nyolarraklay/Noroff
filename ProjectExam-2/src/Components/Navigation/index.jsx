@@ -1,55 +1,96 @@
-import { Link } from 'react-router-dom'
-import { FcHome, FcOrganization, FcCalendar, FcAbout, FcAssistant } from "react-icons/fc";
+import { NavLink, Link } from 'react-router-dom'
 import { useState } from 'react';
+import  useStore  from '../Store';
+import { useNavigate } from 'react-router-dom';
+import { MdClose, MdOutlineMenu } from "react-icons/md";
+
+
+function NavLinks({ hideNav})  {
+    const { isLoggedIn, logOut } = useStore()
+    const navigate = useNavigate()
+    const logOutHandler = () => {
+        logOut()
+        navigate('/')
+        hideNav()
+    }
+
+    return (
+        < >  
+           <NavLink to='/' onClick={hideNav}>
+                <p>  Home </p>
+            </NavLink>
+            <NavLink to='/venues' onClick={hideNav}>
+                <p>  Venues </p>
+            </NavLink>
+          
+                {isLoggedIn ? 
+            <NavLink to='/bookings' onClick={hideNav}>
+                <p>  Bookings </p>
+            </NavLink> : 
+            <NavLink to='./log-in' onClick={hideNav}>
+                <p>  Bookings </p>
+            </NavLink>}
+           <NavLink to='/about' onClick={hideNav}>
+               <p>  About  </p>
+                
+            </NavLink>
+            <NavLink to='/contacts' onClick={hideNav}>
+                <p>  Contacts </p>
+            </NavLink>
+            {!isLoggedIn ? <><NavLink to='/log-in' onClick={hideNav}><p>Sign in</p></NavLink> <NavLink to='/sign-up' onClick={hideNav}><p> Create Account </p></NavLink>  </>  : <button  onClick={logOutHandler}> Log Out </button>} 
+        
+        </ >
+    )
+}
+
 
 function Navigation() {
+    
     const [hideNav, setHideNav] = useState(false)
     const hideNavHandler = () => {
         setHideNav(!hideNav)
     }
-  return (
+    
 
-    <div>
-        <div className='flex justify-between items-center bg-gray-200 p-2'>
-            <p className='text-2xl'>book with us</p>
-            <button onClick={hideNavHandler} className='text-2xl cursor-pointer'>☰</button>
-        </div>
-        {hideNav && 
-    <div className='bg-black p-5 fixed w-full h-full'>
-        <p className='bg-red-200 text-center cursor-pointer text-lg'><Link to='./sign-in'>Sign in</Link> / <Link to='./register'>Create Account</Link></p>
-        <ul className='flex flex-col items-start mt-5 gap-5' onClick={hideNavHandler}>
-            <li > <Link to='/'>
-                <div className='flex items-center rounded-lg bg-white p-1'>
-                    <FcHome className='text-xl'/>
-                    <p className='text-xl'>  Home </p>
-                </div>
-              </Link></li>
-            <li><Link to='/venues'>
-            <div className='flex items-center rounded-lg bg-white p-1'>
-                    <FcOrganization  className='text-xl'/>
-                    <p className='text-xl'>  Venues </p>
-                </div>
-                </Link></li>
-            <li><Link to='/bookings'>
-            <div className='flex items-center rounded-lg bg-white p-1'>
-                    <FcCalendar className='text-xl'/>
-                    <p className='text-xl'>  My Bookings </p>
-                </div></Link></li>
-            <li><Link to='/about'>
-            <div className='flex items-center rounded-lg bg-white p-1'>
-                    <FcAbout className='text-xl'/>
-                    <p className='text-xl'>  About Us </p>
-                </div></Link></li>
-            <li><Link to='/contacts'>
-            <div className='flex items-center rounded-lg bg-white p-1'>
-                    <FcAssistant className='text-xl'/>
-                    <p className='text-xl'>  Contacts </p>
-                </div></Link></li>
-        </ul>
+
+  return (
+<>
+    <div className="md:col-span-2 md:grid  ">
+        <nav className='flex justify-end' >
+            <div className='hidden md:flex md:mx-2 md:space-x-2  '>
+                <div className='flex items-center space-x-1 md:space-x-2' id='navMenu'>
+                     <NavLinks  />
+                </div>   
+            </div>
+            <div className='md:hidden'>
+                   <button onClick={hideNavHandler} aria-label={hideNav ? "Close Navigation" : "Open Navigation"}>{hideNav ? <MdClose/> :<MdOutlineMenu />}</button>
+            </div>
+           
+         
+        </nav>
+       
+     
     </div>
-        }
-    </div>
+     {hideNav && (
+            <div className='flex flex-col items-center basis-full p-2 space-y-3 md:hidden'>
+                <div className='flex flex-col flex-wrap space-y-1 text-lg' id='navMenu'>
+                     <NavLinks hideNav={hideNavHandler} />
+                </div>
+              
+                <div>
+                     <Link to="/sign-up/venue-manager" onClick={hideNavHandler}>
+                    <p className='font-bold text-center text-sm'>Are you a venue manager?</p>
+                    <p className='italic text-center'>Click here</p>
+                </Link>
+                </div>
+               
+            </div>
+               
+            
+        )}
+</>
   )
 }
 
 export default Navigation
+

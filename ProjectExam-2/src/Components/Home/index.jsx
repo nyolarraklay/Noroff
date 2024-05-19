@@ -1,8 +1,19 @@
-import React from 'react'
+import Search from '../SearchComponent'
+import Destinations from '../Destinations'
+import { useState } from 'react'
+
+
 
 function Home() {
+
+const [searchData, setSearchData] = useState('');
+
+
   return (
-    <div>Home</div>
+    <div>
+      <Search onStateChange={setSearchData}/>
+      <Destinations searchResults={searchData} />
+    </div>
   )
 }
 

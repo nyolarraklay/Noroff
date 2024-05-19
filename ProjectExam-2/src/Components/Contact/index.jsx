@@ -28,12 +28,14 @@ function Contacts() {
   });
 
   function onSubmit(data) {
-    console.log(data);
+    alert("Thank you for your message!");
+    
   }
 
   return (
-    <div className="contact-form max-w-md mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4 text-center">Contact Us</h1>
+    <div className="body-content">
+      <div className="divStyle-content"> 
+         <h1 className="text-2xl font-bold mb-4 text-center">Contact Us</h1>
       <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="form-group">
           <label
@@ -104,6 +106,8 @@ function Contacts() {
           </button>
         </div>
       </form>
+      </div>
+     
     </div>
   );
 }

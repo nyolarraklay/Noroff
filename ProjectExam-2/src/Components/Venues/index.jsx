@@ -1,8 +1,10 @@
-import React from 'react'
+import FullListVenues from "../API/fullListVenues"
 
 function Venues() {
   return (
-    <div>Venues</div>
+    <div>
+        <FullListVenues />
+    </div>
   )
 }
 
