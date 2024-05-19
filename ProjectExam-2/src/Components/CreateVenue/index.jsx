@@ -92,7 +92,6 @@ const onSubmit = async  (data) => {
 
     navigate('/bookings');
 
-    console.log(formData);
 }
 
 const handleDelete = async () => {

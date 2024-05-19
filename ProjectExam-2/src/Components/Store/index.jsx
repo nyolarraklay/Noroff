@@ -56,10 +56,7 @@ const useStore = create((set) => ({
             localStorage.setItem('user', user.name);
             localStorage.setItem('loggedIn', true);
             set((state)=>({...state, isLoggedIn: true}));
-         
             return user;
-
-            
           }
           
           const responseBody = await response.text();
@@ -206,9 +203,7 @@ const useStore = create((set) => ({
             const user = json.data;
             set((state)=>({...state, user: user, isVenueManager: isVenueManager}));
             alert('Account created successfully, please log in to continue.')
-       
-        
-            
+
           } catch (error) {
             console.log(error);
           

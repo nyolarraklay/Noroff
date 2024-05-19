@@ -123,8 +123,6 @@ const createdVenue = createdVenues.length > 0 && createdVenues.map((venue) => {
   return venue;
 }) || [];
 
-console.log(createdVenue);
-
 const bookingsByVenue = createdVenue.map((venue) => {
   const bookings = venue.bookings || [];
 
