@@ -36,7 +36,7 @@ function Venues({ venue, isBooked, venueManager }) {
               <StarRating venue={venue} />  
             </div>
             <p className="text-lg font-medium italic">Max Guest: {venue.maxGuests}</p>
-            <div className="flex flex-col flex-wrap overflow-hidden">
+            <div className="flex flex-col flex-wrap overflow-hidden max-w-2xl">
               <p className="font-bold text-lg font-san">{venue.name}</p>
               <p>{venue.price}<span className="text-xs">/night</span></p>
             </div>
