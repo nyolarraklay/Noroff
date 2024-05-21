@@ -30,10 +30,10 @@ function ShortListVenue() {
                 <div className="text-center">Loading...</div>
             ) : (
     <div className='body-content'>
-      <div className='divStyle-content'>
-          <div className='p-10 space-y-6'>
+      <div className='divStyle-content space-y-5'>
+       
             {popularDestinations.map((venue) => <Venue venue={venue} key={venue.id}  />)}
-          </div>
+         
           <div className="flex justify-center">
           <button ><Link to={'/venues'}> See all </Link> </button>
         </div>
