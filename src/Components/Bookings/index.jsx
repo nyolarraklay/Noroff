@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import useStore from '../Store'
-import styled from 'styled-components';
 import Venues from '../VenueCard'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
 
 
-const Container = styled.div`
-  background-image: url(${props => props.url});
-  background-size: cover;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-
-  padding: 1rem;`;
 
   const fetchedVenues = new Set();
 
@@ -175,7 +166,6 @@ async function handleSearch(query) {
     console.log("No result");
   }
 }
-  
 
 
   return (
@@ -185,11 +175,11 @@ async function handleSearch(query) {
                 <div className="text-center">Loading...</div>
             ) : (
                 <>
-    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
-    <div className='relative p-8'>
-      <Container url={url}> 
-         
-      <div className='flex flex-col mx-auto space-y-8'> 
+    <div className="flex flex-col  bg-background-venue mx-auto text-white p-2 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+    
+      <div style={ {backgroundImage: `url(${url})`}} 
+           className='relative bg-cover bg-no-repeat flex items-end p-1  rounded-lg shadow-lg  border border-white'> 
+          <div className='flex flex-col mx-auto space-y-8 p-4 '> 
         <div className='text-white text-4xl sm:text-6xl italic text-center'>
           { user.bio && <h1>{user.bio}</h1>}
         </div>
@@ -211,11 +201,8 @@ async function handleSearch(query) {
         
         </div>
        
+          </div>
       </div>
-    
-      </Container>
-     
-    </div>
     {!user.venueManager  ? 
       <div className='body-content'>
   <div className='divStyle-content'>
@@ -274,7 +261,7 @@ async function handleSearch(query) {
 
           <div className='body-content'>
           {searchResults.map((user, index) => (
-                    <Container key={index}>
+                    <div key={index}>
                       <div className=' flex items-center p-2'>
                         <div>
                           <img className="h-20 w-20 object-cover rounded-lg" src={user.avatar.url} alt={user.avatar.alt}/>
@@ -284,7 +271,7 @@ async function handleSearch(query) {
                           <p className="text-white text-sm">{user.email}</p>
                         </div>
                       </div>
-                    </Container>
+                    </div>
                   ))}
           </div>
         </div>

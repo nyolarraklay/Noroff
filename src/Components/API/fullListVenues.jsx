@@ -72,8 +72,8 @@ function FullListVenues() {
         ) : (
 
         <div className='body-content'>
+            <h1 className='heading-venueManager'>All Venues</h1>
             <div className='divStyle-content'>
-                <h1 className='heading-venueManager'>All Venues</h1>
                 <div>
                   <button onClick={handleShowFilter}> {!showFilter ? "Show Filter" : "Hide filter"}</button>
                 </div>
