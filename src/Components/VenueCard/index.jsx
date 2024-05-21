@@ -23,7 +23,7 @@ function Venues({ venue, isBooked, venueManager }) {
   return (
    
      
-        <div className="bg-background-venue p-1 rounded-md border border-gray-200 shadow-md  grid xs:grid-cols-6 grid-rows-1 gap-4 ">
+        <div className="bg-background-venue p-1 rounded-md border border-gray-200 shadow-md  grid xs:grid-cols-6 grid-rows-1 gap-4">
         <div className="col-span-1 xs:col-span-2">
           {image}
         </div>
@@ -36,8 +36,8 @@ function Venues({ venue, isBooked, venueManager }) {
               <StarRating venue={venue} />  
             </div>
             <p className="text-lg font-medium italic">Max Guest: {venue.maxGuests}</p>
-            <div className="flex flex-col flex-wrap overflow-hidden">
-              <p className="font-bold text-lg font-san">{venue.name}</p>
+            <div className="flex flex-col flex-wrap">
+              <p className="font-bold text-lg font-sans">{venue.name.length < 30 ? venue.name : "No name"} </p>
               <p>{venue.price}<span className="text-xs">/night</span></p>
             </div>
             {venueManager ? (<button><Link to={`/edit-venue/${venue.id}/${venueManager}`}>Edit</Link></button> ) : (<div className="flex justify-center ">

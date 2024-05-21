@@ -105,7 +105,7 @@ function BookNow() {
     <div className="flex items-center">
        <div className="flex flex-col bg-background-venue mx-auto p-4 rounded-lg shadow-lg  border border-white m-2 space-y-5">
     <h2 className="text-4xl font-bold mb-4 uppercase">Venue Booking Form</h2>
-    <h3 className='text-2xl uppercase'>{name}</h3>
+    <h3 className='text-2xl uppercase'>{name.length < 30 ? name : "No name"}</h3>
     <p>{price} / night</p>
     <p>Max Guests: {maxGuests}</p>
     <form className="space-y-4" >
@@ -113,7 +113,7 @@ function BookNow() {
             {/* Guests */}
             <div className="col-span-1">
                 <label htmlFor="guests" className="block text-sm font-medium text-gray-700">Guests</label>
-                <input type="text" name="guests" id="guests" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" onChange={handleGuestsChange} />
+                <input type="text" name="guests" id="guests" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md text-black" onChange={handleGuestsChange} />
             </div>
            
             <div className="col-span-2 my-10">
