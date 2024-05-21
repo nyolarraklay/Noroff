@@ -85,7 +85,7 @@ const locationName = locationNameParts.join(", ");
         </div>
         <div className="px-0 py-5 xs:py-0 xs:px-5">
           <div className="flex justify-between flex-wrap">
-            <h2 className="font-bold text-2xl">{name}</h2>
+            <h2 className="font-bold text-2xl">{name.length < 30 ? name : "No name"}</h2>
             <h3 className="basis-full text-yellow-400">{price}<span className="text-xs">/night</span></h3>
           </div>
           <div>
