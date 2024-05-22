@@ -27,8 +27,8 @@ function ShortListVenue() {
 
   return (
     <div>
-            {isLoading ? (
-                <Loader/>
+            {isLoading ? ( <div id="loader">
+                <Loader/> </div>
             ) : (
     <div className='body-content'>
       <div className='divStyle-content space-y-5'>
