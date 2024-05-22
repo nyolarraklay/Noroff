@@ -25,7 +25,7 @@ function VenueIndividual() {
   }, [fetchVenue, id]);
 
   if (!venue) {
-    return <div>Loading...</div>; 
+    return <Loader/>; 
   }
 
   const { name, price, media, rating, maxGuests, description, meta, location, bookings } = venue;

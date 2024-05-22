@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import StarRating from "../StarRating";
+import Loader from "../Loader";
 
 
 
@@ -7,7 +8,7 @@ function Venues({ venue, isBooked, venueManager }) {
 
 
   if (!venue) {
-    return <div>Loading...</div>; 
+    return <Loader />; 
   }
 
   const media = venue.media;
