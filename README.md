@@ -30,12 +30,24 @@ To run the project locally, follow these steps:
 
 4. Open your browser:
 
+## Testing:
+To test the project locally, follow these steps:
+
+1. Open the terminal and run the tests:
+   ```bash
+   npm run test
+   
+2. To use the Vitest UI.
+   ```bash
+   npm run test:ui
+    ```
 
 ## Dependencies:
   - React: JavaScript library for building user interfaces.
   - Vite: Build tool that provides fast development server and optimized builds.
   - Tailwind CSS: Utility-first CSS framework for rapidly building custom designs.
   - HTML, CSS: Standard web technologies for markup and styling.
+  - Vitest, React Testing Library: Tools for unit testing.
 
 ## Contributing:
 We welcome contributions from the community! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request on GitHub.
