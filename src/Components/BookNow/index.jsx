@@ -4,6 +4,7 @@ import { useState, useEffect} from 'react';
 import useStore from '../Store';
 import { useParams, useNavigate } from "react-router-dom";
 import moment from 'moment';
+import Loader from '../Loader';
 
 function BookNow() {
     const [checkInDate, setCheckInDate] = useState(null);
@@ -98,7 +99,7 @@ function BookNow() {
 
     <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg border border-white m-2 space-y-5">
     {isLoading ? (
-        <div className="text-center">Loading...</div>
+        <Loader/>
     ) : (
         <>
 

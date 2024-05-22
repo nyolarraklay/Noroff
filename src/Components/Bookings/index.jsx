@@ -3,6 +3,7 @@ import useStore from '../Store'
 import Venues from '../VenueCard'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
+import Loader from '../Loader';
 
 
 
@@ -172,7 +173,7 @@ async function handleSearch(query) {
 
     <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg border border-white m-2 space-y-5">
             {isLoading ? (
-                <div className="text-center">Loading...</div>
+                <Loader/>
             ) : (
                 <>
     <div className="flex flex-col  bg-background-venue mx-auto text-white p-2 rounded-lg shadow-lg  border border-white m-2 space-y-5">

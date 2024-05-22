@@ -3,6 +3,7 @@ import useStore from '../Store';
 import { useEffect, useState } from 'react';
 import Venue from '../VenueCard';
 import { Link } from 'react-router-dom'
+import Loader from '../Loader';
 
 
 function ShortListVenue() {
@@ -27,7 +28,7 @@ function ShortListVenue() {
   return (
     <div>
             {isLoading ? (
-                <div className="text-center">Loading...</div>
+                <Loader/>
             ) : (
     <div className='body-content'>
       <div className='divStyle-content space-y-5'>

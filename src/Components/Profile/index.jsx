@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { set, useForm } from 'react-hook-form'
 import useStore from '../Store'
+import Loader from '../Loader'
 
 function MyProfile() {
     const { register, handleSubmit, formState: { errors } } = useForm()
@@ -82,7 +83,7 @@ function MyProfile() {
                 <label htmlFor="banner" className="block text-sm font-medium text-gray-700">Banner</label>
                 <input {...register("banner")} type="text" name="banner" id="banner" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>        
-            {isLoading && <div>Loading...</div>} 
+            {isLoading && <Loader/>} 
         </div>
       <div className="flex justify-center">
             <button type="submit" className="bg-black text-white px-4 py-2 rounded-md">Edit Profile</button>

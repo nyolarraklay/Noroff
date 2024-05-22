@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '../Store';
 import Venues from '../VenueCard';
+import Loader from '../Loader';
 
 function FullListVenues() {
     const { venues, fetchVenues } = useStore();
@@ -68,7 +69,7 @@ function FullListVenues() {
     return (
         <div>
         {isLoading ? (
-            <div className="text-center">Loading...</div>
+            <Loader/>
         ) : (
 
         <div className='body-content'>

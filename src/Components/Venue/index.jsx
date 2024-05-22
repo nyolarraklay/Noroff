@@ -7,6 +7,7 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import { MdOutlinePets } from "react-icons/md";
 import Calendar from "../Calendar";
 import moment from "moment";
+import Loader from "../Loader";
 
 
 function VenueIndividual() {
@@ -24,7 +25,7 @@ function VenueIndividual() {
   }, [fetchVenue, id]);
 
   if (!venue) {
-    return <div>Loading...</div>; 
+    return <Loader/>; 
   }
 
   const { name, price, media, rating, maxGuests, description, meta, location, bookings } = venue;
@@ -74,7 +75,7 @@ const locationName = locationNameParts.join(", ");
   return (
     <div>
     {isLoading ? (
-        <div className="text-center">Loading...</div>
+       <Loader />
     ) : (
       <>
        <div className="body-content">
