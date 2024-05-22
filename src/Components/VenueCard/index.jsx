@@ -17,13 +17,8 @@ function Venues({ venue, isBooked, venueManager }) {
     <img src={media[0].url} alt={media[0].alt} className="object-cover rounded-md size-full" />
   ) : null
 
-  
-
-
-
   return (
    
-     
         <div className="bg-background-venue p-1 rounded-md border border-gray-200 shadow-md  grid xs:grid-cols-6 grid-rows-1 gap-4">
         <div className="col-span-1 xs:col-span-2">
           {image}
