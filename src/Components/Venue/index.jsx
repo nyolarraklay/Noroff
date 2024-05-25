@@ -86,11 +86,11 @@ const locationName = locationNameParts.join(", ");
         </div>
         <div className="px-0 py-5 xs:py-0 xs:px-5">
           <div className="flex justify-between flex-wrap">
-            <h2 className="font-bold text-2xl">{name.length < 30 ? name : "No name"}</h2>
+            <h2 className="font-bold text-2xl">{name.length > 15 ? name.substring(0, 10) + '...'  : name}</h2>
             <h3 className="basis-full text-yellow-400">{price}<span className="text-xs">/night</span></h3>
           </div>
           <div>
-            <p>Location: {city}, {country}</p>
+            <p>Location: {city.length > 15 ? city.substring(0, 10) + '...'  : city}, {country.length > 15 ? country.substring(0, 10) + '...'  : country}</p>
             <div className="flex place-items-center">
               <p>Ratings: </p>
             <p className="bg-background-button px-2 py-1 text-white mx-2">{rating}</p>
@@ -103,7 +103,7 @@ const locationName = locationNameParts.join(", ");
       </div>
       <div className="space-y-5">
         <h2 className="font-bold text-xl text-black uppercase">Description</h2>
-        <p className="p-3">{description}</p>
+        <p className="p-3">{description.length > 100 ? description.substring(0, 10) + '...'  : description}</p>
         <h2 className="font-bold text-xl text-black uppercase">Facilities</h2>
         <div className="flex flex-wrap p-4 justify-between gap-3">
           <div className="flex items-center space-x-2">
@@ -121,7 +121,7 @@ const locationName = locationNameParts.join(", ");
         </div>
         <div className="text-left">
         <h2 className="font-bold text-xl text-black uppercase">Location</h2>
-        <p className="p-3">  {locationName}</p>
+        <p className="p-3">  {locationName.length > 15 ? locationName.substring(0, 10) + '...'  : locationName}</p>
         </div>
         <div>
           <h2 className="font-bold text-xl text-black uppercase">Images</h2>
