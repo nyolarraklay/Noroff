@@ -30,10 +30,10 @@ function Venues({ venue, isBooked, venueManager }) {
         </div>
 
         <div className=" xs:col-span-3">
-          <div className=" space-y-5" >
+          <div className=" space-y-1" >
           <p className="location-heading">{truncatedCity}, {truncatedCountry}</p>
             <div className="flex">
-              <p className="bg-background-button px-2 text-white me-2">{venue.rating}</p>
+              <p className="bg-background-button px-2 text-white me-2 rounded-md">{venue.rating}</p>
               <StarRating venue={venue} />  
             </div>
             <p className="text-lg font-medium italic">Max Guest: {venue.maxGuests}</p>

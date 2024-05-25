@@ -25,10 +25,10 @@ function NavLinks({ hideNav})  {
           
                 {isLoggedIn ? 
             <NavLink to='/bookings' onClick={hideNav}>
-                <p>  Bookings </p>
+                <p>  Profile </p>
             </NavLink> : 
             <NavLink to='./log-in' onClick={hideNav}>
-                <p>  Bookings </p>
+                <p>  Profile </p>
             </NavLink>}
            <NavLink to='/about' onClick={hideNav}>
                <p>  About  </p>

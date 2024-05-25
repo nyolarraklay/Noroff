@@ -121,8 +121,8 @@ const bookingsByVenue = createdVenue.map((venue) => {
   
   return (
     <div className="body-content">
-   <div className="divStyle-content m-2 space-y-5">
-    <div key={venue.id} className='p-2'>
+   <div className="divStyle-content m-2 bg-background-venue">
+    <div key={venue.id} className='p-2 text-black'>
       <h2 className='font-bold text-lg'> Venue: {venue.name}</h2>
       <ol className='list-decimal pl-5'>
         {bookings.map((booking) => {
@@ -171,12 +171,12 @@ async function handleSearch(query) {
 
   return (
 
-    <div className="flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg border border-white m-2 space-y-5">
+    <div className="flex flex-col  mx-auto text-white p-4  m-2 space-y-5">
             {isLoading ? (
                 <Loader/>
             ) : (
                 <>
-    <div className="flex flex-col  bg-background-venue mx-auto text-white p-2 rounded-lg shadow-lg  border border-white m-2 space-y-5">
+    <div className="flex flex-col   mx-auto text-white p-2  m-2 space-y-5">
     
       <div style={ {backgroundImage: `url(${url})`}} 
            className='relative bg-cover bg-no-repeat flex items-end p-1  rounded-lg shadow-lg  border border-white'> 
@@ -189,7 +189,7 @@ async function handleSearch(query) {
         <img className="h-full w-full object-cover" src={avatarUrl} alt={avatarAlt}/>
         </div>
         <div className='relative'>
-            <div className=" ml-2 bg-gray-500 rounded-xl relative opacity-50 w-44 sm:w-60 h-20">
+            <div className=" ml-2 bg-gray-500 rounded-xl relative opacity-50 w-52 sm:w-60 h-20">
          </div>
           <div className='absolute title top-2 left-5'>
           <p className="text-white font-semibold text-xl sm:text-3xl uppercase">{user.name}</p>
@@ -215,7 +215,7 @@ async function handleSearch(query) {
     </div>
       </div>
      : <div className='space-y-5'>
-      <h2 className='italic text-2xl text-center'> You are a venue manager</h2>
+      <h2 className='italic text-2xl text-center text-black'> You are a venue manager</h2>
       <div>
         <ul className='flex justify-evenly'>
           <li><button className='px-1 py-2 bg-white rounded-md' onClick={handleShowVenues}>All Venues</button></li>

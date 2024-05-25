@@ -31,7 +31,7 @@
 }
 
 .divStyle-content {
-  @apply flex flex-col bg-background-venue mx-auto text-white p-4 rounded-lg shadow-lg  border border-white ;
+  @apply flex flex-col  mx-auto text-white p-4 rounded-lg  ;
 }
 
 .body-content {
