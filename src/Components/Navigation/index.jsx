@@ -28,7 +28,7 @@ function NavLinks({ hideNav})  {
                 <p>  Profile </p>
             </NavLink> : 
             <NavLink to='./log-in' onClick={hideNav}>
-                <p>  Profile </p>
+                <p className='hidden'>  Profile </p>
             </NavLink>}
            <NavLink to='/about' onClick={hideNav}>
                <p>  About  </p>
@@ -77,6 +77,7 @@ function Navigation() {
                      <NavLinks hideNav={hideNavHandler} />
                 </div>
               
+                
                 <div>
                      <Link to="/sign-up/venue-manager" onClick={hideNavHandler}>
                     <p className='font-bold text-center text-sm'>Are you a venue manager?</p>

@@ -104,11 +104,7 @@ const locationName = locationNameParts.join(", ");
       <div className="space-y-5">
         <h2 className="font-bold text-xl text-black uppercase">Description</h2>
         <p className="p-3">{description.length > 5
-        
-        
-        
-        
-        4ewe00 ? description.substring(0, 10) + '...'  : description}</p>
+         ? description.substring(0, 10) + '...'  : description}</p>
         <h2 className="font-bold text-xl text-black uppercase">Facilities</h2>
         <div className="flex flex-wrap p-4 justify-between gap-3">
           <div className="flex items-center space-x-2">

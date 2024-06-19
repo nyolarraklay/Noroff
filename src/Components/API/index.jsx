@@ -11,7 +11,7 @@ function ShortListVenue() {
     const [isLoading, setIsLoading] = useState(true);
     
 
-    const popularDestinations = venues.slice(0, 5).sort((a, b) => b.rating - a.rating);
+    const popularDestinations = venues.slice(0, 6).sort((a, b) => b.rating - a.rating);
 
 
     useEffect(() => {
@@ -30,14 +30,12 @@ function ShortListVenue() {
             {isLoading ? ( <div id="loader">
                 <Loader/> </div>
             ) : (
-    <div className='body-content'>
-      <div className='divStyle-content space-y-5'>
-       
-            {popularDestinations.map((venue) => <Venue venue={venue} key={venue.id}  />)}
-         
-          <div className="flex justify-center">
+    <div className='mx-auto mt-8'>
+      <div className='grid xs:grid-rows-3 md:grid-rows-2 xs:grid-flow-col gap-4 grid-cols-1 xs:grid-cols-none'>
+       {popularDestinations.map((venue) => <Venue venue={venue} key={venue.id}/>)} 
+      </div>
+      <div className="flex justify-center mt-6">
           <button ><Link to={'/venues'}> See all </Link> </button>
-        </div>
       </div>
     </div>
             )}

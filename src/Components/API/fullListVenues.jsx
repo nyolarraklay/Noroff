@@ -72,7 +72,7 @@ function FullListVenues() {
             <Loader/>
         ) : (
 
-        <div className='body-content'>
+        <div className='mx-auto mt-8'>
             <h1 className='heading-venueManager'>All Venues</h1>
             <div className='divStyle-content'>
                 <div>
@@ -112,18 +112,18 @@ function FullListVenues() {
              
 
                 {(filteredVenues && filteredVenues.length > 0 && hasInteracted) ? (
-                    <div className='p-10 flex flex-col gap-6'>
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-5'>
                         {filteredVenues.map(venue => (
                             <Venues venue={venue} key={venue.id} />
                         ))}
                     </div>
                 ) : (
                     (hasInteracted && (!filteredVenues || filteredVenues.length === 0)) ? (
-                        <div className='p-10'>
+                        <div className='grid grid-cols-1 sm:grid-cols-3 gap-5'>
                             <p>No results found.</p>
                         </div>
                     ) : (
-                        <div className='p-10 flex flex-col gap-6'>
+                        <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-5'>
                             {venues.map(venue => (
                                 <Venues venue={venue} key={venue.id} />
                             ))}

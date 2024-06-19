@@ -208,7 +208,7 @@ async function handleSearch(query) {
       <div className='body-content'>
   <div className='divStyle-content'>
       <h2 className='text-center text-2xl font-bold'>My Bookings</h2>
-      <div className='p-10 flex flex-col gap-6'>
+      <div className='grid xs:grid-rows-3 md:grid-rows-2 xs:grid-flow-col gap-4 grid-cols-1 xs:grid-cols-none'>
       {bookedVenues.map((venue) =>
        <Venues venue={venue} key={venue.id} isBooked={booked} />)}  
       </div>
@@ -225,12 +225,12 @@ async function handleSearch(query) {
       </div>
       <div> 
         {showVenues &&
-            <div className="body-content">
+            <div className="mx-auto mt-8">
             <div className="divStyle-content">
         <div className='space-y-5'>
           <h2 className='heading-venueManager'>All Venues</h2>
           <button className="bg-white text-black p-1 rounded-lg mt-4 text-xs"><Link to={`/addVenue/${loggedIn}`}>Add Venue</Link> </button>
-          <div className='space-y-5'>
+          <div className='grid xs:grid-rows-3 md:grid-rows-2 xs:grid-flow-col gap-4 grid-cols-1 xs:grid-cols-none'>
             {venues.map((venue) => <Venues venue={venue} key={venue.id} venueManager={isVenueManager} />)}
           </div>
         </div>
@@ -244,7 +244,7 @@ async function handleSearch(query) {
          
         </div>}
         {showUsers &&
-            <div className="body-content">
+            <div className="mx-auto mt-8">
             <div className="divStyle-content">
         <div>
           <h2 className='heading-venueManager'>All Users</h2>
